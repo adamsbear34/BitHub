@@ -1,0 +1,67 @@
+ <Paper variant="outlined" className={classes.paper}>
+                <Grid container spacing={0}>
+                    <Grid item xs={1} / >
+                    <Grid item xs={2} className={classes.userContent}> 
+                        <Paper elevation={0} className={classes.paperMain}>
+                            <Avatar variant="square" className={classes.userAvatar}>
+                                E
+                            </Avatar>
+                            <Typography className={classes.paperText} variant="h5">{profile.user.username}</Typography>
+                            <Typography className={classes.paperText} variant="body">{profile.title}</Typography>
+                        </Paper>
+                        
+                    </Grid>
+                    <Grid item xs={4} className={classes.userContent}>
+                            <Card className={classes.cardRating} >
+                                <CardContent>
+                                    <Typography  className={classes.rating}>
+                                        {profile.user.rating}
+                                    </Typography>
+                                    <Typography  className={classes.ratingLbl}>
+                                    Rating
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                            <Card className={classes.cardBio}>
+                                <CardContent>
+                                    <Typography className={classes.bioLbl}>Bio</Typography>
+                                    <Typography className={classes.bio}>{profile.bio}</Typography> 
+                                </CardContent> 
+                            </Card>
+                    </Grid>
+                    <Grid itme xs={5} />
+                </Grid>
+            </Paper>
+
+
+            <Card className={classes.root}>
+           <div className={classes.details}>
+                <CardContent className={classes.content}>
+                    <Grid container xs spacing={2} direction="row">
+                        <Grid item>
+                            <Avatar 
+                                className={classes.cover}
+                                src={coin.image}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Typography  variant={"h6"}>
+                                {coin.name}
+                            </Typography>   
+                        </Grid>
+                        <Grid item>
+                            <Typography  variant={"h6"}
+                                style={{color: (coin.price_change_percentage_24h > 0) ? 'green' : 'red'}}
+                            >
+                                {Math.floor(coin.price_change_percentage_24h * 100)/100}%
+                            </Typography>   
+                        </Grid>
+                        <Grid item> 
+                            <Typography variant={"h6"}>
+                                {formatter.format(coin.current_price)}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+           </div>
+       </Card>

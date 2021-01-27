@@ -1,0 +1,140 @@
+import React, { Fragment, useState} from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addCoin } from 'actions/profile';
+
+//Materiau UI
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import StarsIcon from '@material-ui/icons/Stars';
+import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import { Tab } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+    layout: {
+        width: "auto",
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        marginTop: theme.spacing.unit * 3,
+        [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+          width: 1100,
+          marginLeft: "auto",
+          marginRight: "auto"
+        }
+      },
+      coin_img: {
+          width: 17,
+          height: 17,
+      },
+      coin_name: {
+        fontWeight: "bold"
+    }
+
+}));
+
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+        fontSize: 15,
+        fontWeight: "bold"
+    } ,
+    body: {
+        fontSize: 14,
+    }
+}))(TableCell); 
+
+
+
+const CoinTable = ({addCoin, coins}) => {
+    const classes = useStyles();
+    
+    const [formData, setFormData] = useState({
+        coinId: '',
+        symbol: '',
+        name: ''
+    });
+    const handleCellClick = (e) => {
+        console.log(e.target.textContent);
+    }
+
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2
+      })
+
+    return (
+        <Fragment>
+            <CssBaseline />
+            <div className={classes.layout}>
+                <Table className={classes.table} aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>#</StyledTableCell>
+                            <StyledTableCell>Coin</StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell>Price</StyledTableCell>
+                            <StyledTableCell>24h</StyledTableCell>
+                            <StyledTableCell>24h Volume</StyledTableCell>
+                            <StyledTableCell>Market Cap</StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {coins.map((coin, idx) => (
+                            <TableRow 
+                            key={coin.id}
+                            >
+                                <StyledTableCell component="th" scope="row">
+                                    {idx + 1}
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    <img src={coin.image} className={classes.coin_img} />
+                                </StyledTableCell>
+                                <StyledTableCell className={classes.coin_name}>
+                                    {coin.name}
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    {formatter.format(coin.current_price)}
+                                </StyledTableCell>
+                                <StyledTableCell style={{color: (coin.price_change_percentage_24h > 0) ? 'green' : 'red'}}>
+                                    {Math.floor(coin.price_change_percentage_24h * 100)/100}%
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    {formatter.format(coin.total_volume)}
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    {formatter.format(coin.market_cap)}
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    <IconButton
+                                        
+                                    >
+                                        <StarsIcon/>
+                                    </IconButton>
+                                </StyledTableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+        </Fragment>
+    )
+}
+
+CoinTable.propTypes = {
+    coins: PropTypes.array.isRequired,
+    addCoin: PropTypes.func.isRequired,
+}
+
+export default connect(null, {addCoin})(CoinTable)
