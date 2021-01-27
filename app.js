@@ -7,9 +7,6 @@ const app = express();
 const path = require('path');
 
 
-
-
-
 //app.use('/api/auth');
 const PORT = config.get('port') || 5000;
 
@@ -42,13 +39,18 @@ app.use('/api/category', require('./routes/api/category.routes'));
 app.use('/api/analytics', require('./routes/api/analytics.routes'));
 app.use('/api/search', require('./routes/api/search.routes'));
 
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
+  
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+  }
+
+
 start();
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/build'));
 
-    app.use('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
 
