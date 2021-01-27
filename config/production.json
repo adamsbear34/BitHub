@@ -1,0 +1,7 @@
+{
+    "port": 5000,
+    "mongoUri": "mongodb+srv://user01:qwerty1234@cluster0.lajmy.gcp.mongodb.net/app?retryWrites=true&w=majority",
+    "jwtSecret": "blockSecretToken",
+    "AWSSecretKey": "jwdAgfbX/HtoUKXv6ri7tkfqkBvR35gdZRgMgQ37",
+    "AWSAccessKeyId": "AKIAJLJM72KPH4G7ATEA"
+}

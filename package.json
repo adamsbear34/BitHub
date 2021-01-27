@@ -1,0 +1,43 @@
+{
+  "name": "capstopne-backend",
+  "version": "1.0.0",
+  "description": "Blockchain info website",
+  "main": " app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "keywords": [
+    "capstone",
+    "react"
+  ],
+  "author": "\"Evgeniy Shomin <es1230200306@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "aws-sdk": "^2.827.0",
+    "axios": "^0.20.0",
+    "bcryptjs": "^2.4.3",
+    "coingecko-api": "^1.0.10",
+    "config": "^3.3.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "formidable": "^1.2.2",
+    "gravatar": "^1.8.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "request": "^2.88.2",
+    "slugify": "^1.4.6",
+    "string-strip-html": "^6.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
