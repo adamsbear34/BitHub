@@ -8,7 +8,7 @@ const path = require('path');
 
 
 //app.use('/api/auth');
-const PORT = process.env.PORT|| 5000;
+const PORT = process.env.PORT || 5000;
 
 //Подключение к MogoDB
 async function start(){
