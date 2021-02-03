@@ -27,17 +27,17 @@ const PostView = ({ getPost, post: {post, loading }, match}) => {
         <Fragment>
             
             <Grid container>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <PostContent post={post} />
                 </Grid>
             </Grid>
             <Grid container>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <PostActions post={post} />
                 </Grid>
             </Grid>
             <Grid container>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <Discussions post={post} />
                 </Grid>
             </Grid>

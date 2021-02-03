@@ -12,21 +12,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider"; 
-
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
-    layout: {
-        width: "auto",
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-          width: 1100,
-          marginLeft: "auto",
-          marginRight: "auto"
-        }
-      },
       mainGrid: {
-        marginTop: theme.spacing.unit * 3
+        marginTop: theme.spacing(3)
       },
     
 }));
@@ -40,29 +30,29 @@ const Discussions = ({post}) => {
         return (
             <Fragment>
                 <CssBaseline />
-                <div className={classes.layout}>
+                <Container maxWidth={'md'}>
                     <main>
                         <Grid container  className={classes.mainGrid}>
-                            <Grid item xs={12} md={8}>
-                            <Typography variant="h6" gutterBottom>
-                                Add Comment 
-                            </Typography>
-                            <Divider variant="middle" className={classes.divider} />
+                            <Grid item xs={12}>
+                                <Typography variant="h6" gutterBottom>
+                                    Add Comment 
+                                </Typography>
+                                <Divider />
                             </Grid>
                         </Grid>
                         <Grid container>
-                            <Grid item md={12}>
+                            <Grid item xs={12}>
                                 <CreateDiscussion  postId={_id}/>
                             </Grid>
                         </Grid>
                         <Grid container>
-                            <Grid item md={12}>
+                            <Grid item xs={12}>
                                 <Discussion comments={coments} postId={_id} /> 
                             </Grid>
 
                         </Grid>
                     </main>
-                </div>
+                </Container>
             </Fragment>
         )
     }
@@ -74,21 +64,21 @@ const Discussions = ({post}) => {
                 commentBox()
             ) : (
                 <Fragment>
-                    <div className={classes.layout}>
+                    <Container maxWidth={"md"}>
                         <Grid container  className={classes.mainGrid}>
-                            <Grid item xs={12} md={8}>
-                            <Typography variant="h6" gutterBottom >
-                                Add Comment  
-                            </Typography>
-                                <Divider variant="middle" className={classes.divider} />
+                            <Grid item xs={12}>
+                                <Typography variant="h6" gutterBottom >
+                                    Add Comment  
+                                </Typography>
+                                <Divider />
                             </Grid>
                             <Grid container>
-                                <Grid item md={12}>
+                                <Grid item xs={12}>
                                     <CreateDiscussion  postId={_id}/>
                                 </Grid>
+                            </Grid>
                         </Grid>
-                        </Grid>
-                    </div>
+                    </Container>
                 </Fragment>
         )}
         </Fragment>

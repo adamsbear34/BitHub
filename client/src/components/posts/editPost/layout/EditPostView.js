@@ -38,45 +38,42 @@ const EditPostView = ({post, categories, sentFormData}) => {
     post.categories.map(c => {
         postCategories.push(c._id);
     });
-    const [updatedTitle, setTitle] = useState('');
+    const [updatedTitle, setTitle] = useState(post.title);
+
+
     var formData = {
-        title: post.title,
+        title: updatedTitle,
         body: post.body,
         categories: postCategories
-    }
+    };
 
-  
     useEffect(() => {
         setTitle(post.title);
-    },[setTitle]);
-    
-    const postImage = (updated_image) => {
-        formData.image = updated_image;
-        sentFormData(formData);
-    }
-
-    const getPostCategories = (updated_categories) => {
-        formData.categories = updated_categories;
-        sentFormData(formData);
-    }
-
-    const getPostBody = (updated_body) => {
-       formData.body = updated_body;
-       sentFormData(formData);
-    }
+    },[post.title]);
 
     const handleTitle = (e) => {
         setTitle(e.target.value);
-        formData.title = e.target.value;
-        sentFormData(formData);
-    }
+    };
+
+    const hadleUpdatedData = (data) => {
+        if (data.image){
+            formData.image = data.image;
+        }
+        if (data.body && data.body !== "") {
+            formData.body = data.body;
+        }
+        if (data.categories && data.categories.length > 0){
+            formData.categories = data.categories;
+        }
+        sentFormData(formData)
+    };
     return (
         <Fragment>
             <CssBaseline />
             <div className={classes.layout}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <PostHead current_image={post.photo} getUpdatedImage={postImage} />
+                        <PostHead current_image={post.photo} getUpdatedData={hadleUpdatedData} />
                     </Grid>
                 </Grid>
                 <Grid container>
@@ -95,12 +92,12 @@ const EditPostView = ({post, categories, sentFormData}) => {
                 </Grid>
                 <Grid container>
                     <Grid item xs={12}>
-                        <PostCategories categories={categories} current_categories={post.categories} sentUpdatedCategories={getPostCategories} />
+                        <PostCategories categories={categories} current_categories={post.categories}  getUpdatedData={hadleUpdatedData} />
                     </Grid>
                 </Grid>
                 <Grid container className={classes.editorContainer}>
                     <Grid item xs={12}>
-                        <TextEditor currentBody={post.body} sentUpdatedBody={getPostBody} />
+                        <TextEditor currentBody={post.body} getUpdatedData={hadleUpdatedData} />
                     </Grid>
                 </Grid>
 

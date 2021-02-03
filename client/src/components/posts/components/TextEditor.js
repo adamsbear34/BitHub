@@ -20,49 +20,47 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const TextEditor = ({currentBody, sentUpdatedBody}) => {
+const TextEditor = ({currentBody, getUpdatedData}) => {
     const classes = useStyles();
 
-    const [body, setBody] = useState("");
+    const [body, setBody] = useState(currentBody);
 
     useEffect(() => {
-
-        if (currentBody == null){
-            return;
-        }
-
         setBody(currentBody);
-    }, [setBody]);
+    }, [currentBody]);
 
+    //Text Editor Params
     const modules = {
         toolbar: [
           [{ 'header': [1, 2, false] }],
           ['bold', 'italic', 'underline','strike', 'blockquote'],
           [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-          ['link', 'image'],
+          ['link'],
           ['clean']
         ],
-      }
-
+      };
+  
    const formats = [
         'header',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
         'list', 'bullet', 'indent',
-        'link', 'image'
+        'link'
       ] 
     
       
     const handleBody = (e) =>{
         setBody(e);
-        sentUpdatedBody(body);
-    }
+    };
 
+    useEffect(() => {
+        getUpdatedData({body: body});
+    }, [handleBody]);
 
     return (
         <Fragment>
             <ReactQuill 
                 value={body} 
-                defaultValue={currentBody} 
+                defaultValue={body} 
                 className={classes.richTextEditor}
                 modules={modules}
                 formats={formats}
@@ -75,7 +73,7 @@ const TextEditor = ({currentBody, sentUpdatedBody}) => {
 
 TextEditor.propTypes = {
     currentBody: PropTypes.string.isRequired,
-    sentUpdatedBody: PropTypes.func.isRequired,
+    getUpdatedData: PropTypes.func.isRequired,
 
 }
 export default TextEditor

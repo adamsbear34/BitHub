@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getPostsImage } from '../../../actions/images';
 import parse from 'html-react-parser'
 //Material UI
-import { Grid } from '@material-ui/core';
+import { Divider, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -27,17 +27,17 @@ import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      width: "100%",
+      width: "80%",
       backgroundColor: theme.palette.background.default,
       
     },
     header: {
-
+      
     },
     media: {
-      height: 400,
+      height: 300,
       width: "100%",
-      objectFit: "cover"
+      objectFit: "contain"
        // 16:9
     },
     expand: {
@@ -51,12 +51,18 @@ const useStyles = makeStyles((theme) => ({
       transform: 'rotate(180deg)',
     },
     avatar: {
-    
+     
     },
     content: {
-      fontSize: "large",
-      fontWeight: "bold",
+      fontSize: 15,
       padding: 0
+    },
+    profile_link: {
+      textDecoration: 'none',
+      color: theme.palette.primary.light
+    },
+    post_action: {
+      paddingLeft: 0
     }
   }));
 
@@ -66,10 +72,6 @@ const useStyles = makeStyles((theme) => ({
 const PostItem = ({post: {_id, title, excerpt, photo, categories, postedBy, slug }, auth}) => {
     const classes = useStyles();
     
-    // let b64 = new Buffer.from(photo.data.data).toString('base64');
-    // let mimeType = photo.contentType;
-
-
     return (
             <Card className={classes.root} elevation={0}>
                 <CardHeader
@@ -99,7 +101,9 @@ const PostItem = ({post: {_id, title, excerpt, photo, categories, postedBy, slug
                     }
                     titleTypographyProps={{variant: 'h5'}}
                     title={title}
-                    subheader={postedBy.username}
+                    subheader={
+                      <Link className={classes.profile_link} to={`/profile/${postedBy._id}`}>{postedBy.username}</Link>
+                    }
                 />
                 <CardMedia
                     className={classes.media}
@@ -111,15 +115,18 @@ const PostItem = ({post: {_id, title, excerpt, photo, categories, postedBy, slug
                 <CardContent className={classes.content}>
                       {parse(`${excerpt}`)} 
                 </CardContent>
-                <CardActions disableSpacing>
+                <CardActions  className={classes.post_action} disableSpacing>
                 <Button 
-                variant="outlined" 
+                variant="outlined"
+                className={classes.btn_read}
+                size={'small'} 
                 color="secondary"
                 component={Link}
                 to={`/posts/${_id}`}>
                     Read More
                 </Button>
                 </CardActions>
+                <Divider />
             </Card>
     )
 }

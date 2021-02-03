@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Faker from 'faker';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { deleteComment } from 'actions/post';
+import {Link} from 'react-router-dom';
+
+
+
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import List from '@material-ui/core/List';
@@ -23,10 +26,13 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.background.paper
     },
     fonts: {
-      fontWeight: "bold"
+      fontWeight: "bold",
+      textDecoration: 'none',
+      color: theme.palette.primary.dark
     },
     inline: {
-      display: "inline"
+      display: "inline",
+      color: theme.palette.grey
     }
   }));
 
@@ -42,26 +48,37 @@ const Discussion = ({comments, auth, deleteComment, postId}) => {
                 <React.Fragment key={comment._id}>
                     <ListItem key={comment._id} alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar alt="avatar" src={Faker.image.avatar()} />
+                        <Avatar alt="avatar" src={comment.avatar} />
                     </ListItemAvatar>
                     <ListItemText
                         primary={
-                        <Typography className={classes.fonts}>
-                            {comment.author}
+                        <Typography 
+                            className={classes.fonts} 
+                            variant={"subtitle2"}
+                            component={Link}
+                            to={`/profile/${comment.user}`}
+                            >
+                           @{comment.author}
                         </Typography>
                         }
                         secondary={
                         <>
                             <Typography
                             component="span"
-                            variant="body2"
+                            variant="caption"
                             className={classes.inline}
-                            color="textPrimary"
                             >
                             {moment(comment.date).fromNow()}
                             </Typography>
-                            <Typography></Typography>
-                            {` - ${comment.text}`}
+                            <Typography
+                                component="span"
+                                variant="body2"
+                                display="block"
+                                color="textPrimary"
+                            >
+                                {` - ${comment.text}`}
+                            </Typography>
+                            
                         </>
                         }
                     />
@@ -74,9 +91,7 @@ const Discussion = ({comments, auth, deleteComment, postId}) => {
                                 <DeleteIcon />
                             </IconButton>
                         )
-
-                    )}
-                        
+                    )}     
                     </ListItemSecondaryAction>
                     </ListItem>
                     <Divider />
@@ -92,7 +107,7 @@ Discussion.propTypes = {
     comments: PropTypes.array.isRequired,
     auth: PropTypes.object.isRequired,
     deleteComment: PropTypes.func.isRequired,
-    postId: PropTypes.number.isRequired,
+    postId: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({

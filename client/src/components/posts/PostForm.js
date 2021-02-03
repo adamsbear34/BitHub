@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addPost } from '../../actions/post';
 import { getCategories } from '../../actions/categories';
+import { Redirect } from 'react-router-dom';
 //Need action for categories
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -18,7 +19,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 //Styles
 
@@ -52,10 +56,20 @@ const useStyles = makeStyles((theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      modal_paper: {
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
   }));
 
 
-const PostForm = ({ addPost, getCategories, categories: {categories, loading}, post: {status, error} }) => {
+const PostForm = ({ addPost, getCategories, categories: {categories, loading}, post: {status, uploading}, history }) => {
     const classes = useStyles();
 
     //States
@@ -109,7 +123,7 @@ const PostForm = ({ addPost, getCategories, categories: {categories, loading}, p
 
     const onSubmit = (e) => {
         e.preventDefault();
-        addPost(formData)
+        addPost(formData, history)
     }
     //Layout
 
@@ -130,7 +144,34 @@ const PostForm = ({ addPost, getCategories, categories: {categories, loading}, p
         'link', 
       ] 
 
+    if (status){
+        return <Redirect to="/" />
+    }
 
+
+    const sendingPostModal = () => {
+        return (
+            <Fragment>
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={true}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    <Fade in={true}>
+                    <div className={classes.modal_paper}>
+                        <CircularProgress />
+                    </div>
+                    </Fade>
+                </Modal> 
+            </Fragment>
+        )
+    }
 
     const showCategories = () => {
         return (
@@ -218,10 +259,15 @@ const PostForm = ({ addPost, getCategories, categories: {categories, loading}, p
         )
     }
 
+    
+
 
     return (
        <Fragment>
            {createBlogForm()}
+           { uploading && (
+               sendingPostModal()
+           )}
        </Fragment>
     )
 }

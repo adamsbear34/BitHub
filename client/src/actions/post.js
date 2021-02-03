@@ -10,6 +10,8 @@ import {
     UPDATE_POST,
     ADD_COMMENT,
     REMOVE_COMMENT,
+    UPLOADING_POST,
+    LOAD_POSTS
 } from './types';
 
 
@@ -49,19 +51,23 @@ export const getPost = (id) => async dispatch => {
 
 
 //Add post 
-export const addPost = formData => async dispatch => {
+export const addPost = (formData) => async dispatch => {
+    dispatch({
+        type: UPLOADING_POST
+    });
     const config = {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
-    }
+    };
     try { 
        const res =  await axios.post('/api/posts', formData, config);
-        
+
         dispatch({
             type: ADD_POST,
             payload: res.data
         });
+ 
         dispatch(setAlert('Post Created', 'success'));
     } catch (err) {
         const errors = err.response.data.errors;
@@ -77,11 +83,16 @@ export const addPost = formData => async dispatch => {
 
 //Update post
 export const updatePost = (formData, id) => async dispatch => {
+    dispatch({
+        type: UPLOADING_POST
+    });
     const config = {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     }
+   
+
     try { 
        const res =  await axios.post(`/api/posts/edit/${id}`, formData, config);
         
@@ -107,7 +118,6 @@ export const updatePost = (formData, id) => async dispatch => {
 export const deletePost = postId => async dispatch => {
     try {
         const res = await axios.delete(`/api/posts/${postId}`);
-
         dispatch({
             type: DELETE_POST,
             payload: postId
@@ -124,16 +134,14 @@ export const deletePost = postId => async dispatch => {
 
 //Upvote
 export const updateVote = (postId, formData) => async dispatch => {
-    console.log(formData);
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
-    }
+    };
 
     try {
         const res = await axios.post(`/api/posts/vote/${postId}`, formData, config);
-        console.log("Exceuted");
         dispatch({
             type: UPDATE_VOTES,
             payload: { postId, voteCount: res.data}
@@ -153,10 +161,28 @@ export const updateVote = (postId, formData) => async dispatch => {
 
 
 
+//Search by post
+export const searchPostByTitle = (query) => async dispatch => {
+    dispatch({
+        type: LOAD_POSTS
+    });
+    try{
+        const res = await axios.get(`/api/search?search=${query}`);
+        dispatch({
+            type: GET_POSTS,
+            payload: res.data
+        });
+    }catch(err){
+        dispatch({
+            type: POST_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+    }
+};
+
+
 //Add comment
 export const addComment = (postId, formData) => async dispatch => {
-        console.log(`Recived comment for post: ${postId} text: ${formData}`)
-        console.log(formData);
         const config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -175,7 +201,7 @@ export const addComment = (postId, formData) => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status } 
             });
         }
-}
+};
 
 //Delete Comment 
 export const deleteComment = (postId, commentId) => async dispatch => {

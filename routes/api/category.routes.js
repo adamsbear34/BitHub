@@ -75,12 +75,11 @@ router.get('/:id', async (req, res)=> {
                 $eq  : category._id 
             }
         }
-    });
-        console.log(category.slug)
+    }).populate('postedBy', ['_id', 'username', 'voteCount', 'avatar']);
+        
         if (!category || !posts){
           return  res.status(404).json({"error": "No category found"});
         }
-
         res.json({category, posts});
     } catch (err) {
         console.error(err.message);

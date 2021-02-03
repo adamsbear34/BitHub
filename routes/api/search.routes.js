@@ -13,7 +13,7 @@ router.get('/',  async(req, res)=>{
             if(!posts){
                 return res.status(404).json({msg: 'Nothing was found'});
             }
-            
+               
             res.json(posts);
         }
     }catch(err){

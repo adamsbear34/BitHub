@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { updatePost, getPost } from '../../../actions/post';
 import { getCategories } from '../../../actions/categories';
 import PropTypes from 'prop-types';
-
+import { Redirect } from 'react-router-dom';
 //Components
 import EditPostView from './layout/EditPostView';
 
@@ -12,6 +12,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade'
+
 
 //CSS
 const useStyles = makeStyles((theme) => ({
@@ -28,10 +32,20 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         marginBottom: theme.spacing(3),
-    }
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      modal_paper: {
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+      },
   }));
 
-const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading}, categories: {categories}, auth, match}) => {
+const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading, status, uploading}, categories: {categories}, auth, match}) => {
     const classes = useStyles();
     var updatedFormData = null;
     useEffect(() => {
@@ -39,9 +53,9 @@ const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading
         getCategories();
     },[getPost, getCategories]);
 
+
     const getFormData = (formData) => {
         updatedFormData = formData;
-        console.log(updatedFormData);
     };
     
 
@@ -49,19 +63,44 @@ const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading
     const onSubmit = (e) => {
         e.preventDefault();
         if (updatedFormData === null){
-            console.log("somthing went wrong");
             return;
         }
-        console.log(updatedFormData);
         const formData = new FormData();
         formData.append('image', updatedFormData.image);
         formData.append('body', updatedFormData.body);
         formData.append('title', updatedFormData.title);
         formData.append('categories', updatedFormData.categories);
-        updatePost(formData);
+        updatePost(formData, post._id);
     };
 
 
+    const sendingPostModal = () => {
+        return (
+            <Fragment>
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={true}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    <Fade in={true}>
+                    <div className={classes.modal_paper}>
+                        <CircularProgress />
+                    </div>
+                    </Fade>
+                </Modal> 
+            </Fragment>
+        )
+    }
+
+    if (status){
+        return <Redirect to={`/posts/${post._id}`} />
+    }
 
     return (
         <Fragment>
@@ -86,6 +125,9 @@ const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading
                             </div>
                        
                         </form>
+                        { uploading && (
+                            sendingPostModal()
+                        )}
                         </Fragment>
                     ) : (
                         <Fragment>

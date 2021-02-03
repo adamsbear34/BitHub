@@ -12,7 +12,8 @@ import {
     GET_USER_STATS,
     USER_STATS_ERROR,
     UPLOAD_IMAGE,
-    GET_PROFILE_REQUEST
+    GET_PROFILE_REQUEST,
+    REGISTRATION_COMPLETE
 } from './types';
 
 
@@ -92,6 +93,9 @@ export const createProfile = (formData, history, edit = false) => async dispatch
         
         const res = await axios.post('/api/profile', formData, config);
         dispatch({
+            type: REGISTRATION_COMPLETE
+        });
+        dispatch({
             type: GET_PROFILE,
             payload: res.data
         });
@@ -141,7 +145,6 @@ export const addCoin = (formData) => async dispatch => {
 
 //Get users coins by id 
 export const getUserCoins = (id) => async dispatch => {
-    console.log("GET USER COINS COLLED");
     try {
         const res = await axios.get(`/api/coins/${id}`);
         

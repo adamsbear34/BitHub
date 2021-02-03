@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { Button, Container, Grid, ButtonGroup, Typography } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
             margin: theme.spacing(1),
         },
         width: "auto",
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+        marginLeft: theme.spacing(3),
+        marginRight: theme.spacing(3),
+        [theme.breakpoints.up(1100 + theme.spacing(3) * 2)]: {
           width: 1100,
           marginLeft: "auto",
           marginRight: "auto"
@@ -78,12 +78,11 @@ const PostActions = ({ updateVote, post}) => {
     return ( 
         <Fragment>
             <CssBaseline />
-            <div className={classes.paper}>
+            <Container maxWidth={'md'}>
                 <ButtonGroup  aria-label="outlined button group">
                         <Button
                             name="up"
                             variant="outlined"
-                            color="success"
                             onClick={ e => {
                                 vote("up", _id)
                             }}
@@ -107,7 +106,7 @@ const PostActions = ({ updateVote, post}) => {
                             <ArrowDownwardIcon className={classes.arrowDown} />
                         </Button>
                 </ButtonGroup>      
-            </div>
+            </Container>
         </Fragment>     
     )
 }

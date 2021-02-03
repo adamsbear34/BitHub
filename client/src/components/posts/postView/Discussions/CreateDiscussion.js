@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     container: {
         width: "100%",
         float: "left"
-        
     },
     paper: {
         marginTop: theme.spacing(1),
@@ -22,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
       },
       btn_submit: {
-          height: "100%"
+          height: "100%",
+          borderColor: theme.palette.success.main,
+          color: theme.palette.success.main,
+         
+      
       }
 
 }));
-
 
 const CreateDiscussion = ({ postId, addComment, auth}) => {
     const classes = useStyles();
@@ -43,7 +45,7 @@ const CreateDiscussion = ({ postId, addComment, auth}) => {
                         setText('');
                     }}>
                         <Grid container spacing={2}>
-                            <Grid item md={8} xs={12}>
+                            <Grid item md={11} xs={12}>
                                 <TextField
                                     name="comment_text"
                                     variant="outlined"
@@ -54,12 +56,11 @@ const CreateDiscussion = ({ postId, addComment, auth}) => {
                                     autoFocus
                                 />   
                             </Grid>
-                            <Grid item md={4} xs={12}>
+                            <Grid item md={1} xs={12}>
                                 <Button
                                     type="submit"
                                     disabled={!auth.isAuthenticated}
                                     variant="outlined"
-                                    color="secondary"
                                     className={classes.btn_submit}
                                 >
                                     Add

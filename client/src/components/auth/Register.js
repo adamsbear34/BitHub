@@ -95,7 +95,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
     //Redirect 
     if (isAuthenticated){
-        return(<Redirect to='/profile' />);
+        return(<Redirect to='/dashboard' />);
     }
     return ( 
     <ThemeProvider theme={theme}>

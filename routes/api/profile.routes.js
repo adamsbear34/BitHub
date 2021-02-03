@@ -189,7 +189,7 @@ router.post(
         .populate({
             path: "user",
             model: "User",
-            select: 'username avatat rating',
+            select: 'username avatar rating',
             populate: {
                 path: 'posts', 
                 model:"Post",

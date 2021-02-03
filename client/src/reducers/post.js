@@ -9,14 +9,17 @@ import{
     UP_VOTE,
     DE_VOTE,
     DELETE_POST,
-    UPDATE_POST
+    UPDATE_POST,
+    UPLOADING_POST,
+    LOAD_POSTS
 } from '../actions/types'
 
 const initialState = {
     posts: [],
     post: null,
     loading: true,
-    status: true,
+    uploading: false,
+    status: false,
     error: {}
 }
 
@@ -26,18 +29,32 @@ export default function(state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case LOAD_POSTS:
+            return {
+                ...state,
+                loading: true
+            };
         case GET_POSTS:
             return{
                 ...state, 
                 posts: payload,
-                loading: false
+                loading: false,
+                status: false,
+                
             };
         case POST_ERROR:
             return{
                 ...state, 
                 error: payload,
-                loading: false
-            } ;
+                loading: false,
+                status: false,
+                uploading: false
+            };
+        case UPLOADING_POST:
+            return {
+                ...state,
+                uploading: true
+            }
         case UPDATE_VOTES:
             return{
                 ...state,
@@ -50,20 +67,24 @@ export default function(state = initialState, action) {
                 ...state,
                 posts: [...state.posts, payload],
                 loading: false,
-                status: false
+                uploading: false,
+                status: true
             };
         case UPDATE_POST:
             return {
                 ...state,
                 posts: [...state.posts, payload],
                 loading: false,
-                status: false
+                uploading: false,
+                status: true
+                
             }
         case GET_POST:
             return{
                 ...state,
                 post: payload,
-                loading: false
+                loading: false,
+                status: false
             };
         case DELETE_POST: 
             return{

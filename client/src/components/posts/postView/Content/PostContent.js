@@ -1,52 +1,52 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import parse from 'html-react-parser'
-
+import moment from 'moment';
+import {Link} from 'react-router-dom';
 
 //Material Ui 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Hidden from "@material-ui/core/Hidden";
-import Button from "@material-ui/core/Button";
+import Container from '@material-ui/core/Container';
 import Divider from "@material-ui/core/Divider";
+import Avatar from '@material-ui/core/Avatar';
+
 
 const useStyles = makeStyles((theme) => ({
     layout: {
         width: "auto",
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+        marginLeft: theme.spacing(3),
+        marginRight: theme.spacing(3),
+        [theme.breakpoints.up(1100 + theme.spacing(3) * 2)]: {
           width: 1100,
           marginLeft: "auto",
           marginRight: "auto"
         }
       },
-      mainFeaturedPost: {
-        backgroundColor: theme.palette.grey[800],
-        color: theme.palette.common.white,
-        marginBottom: theme.spacing.unit * 4
+      post_head: {
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(3)
       },
-      mainFeaturedPostContent: {
-        padding: `${theme.spacing.unit * 6}px`,
-        [theme.breakpoints.up("md")]: {
-          paddingRight: 0
-        }
-      },
-      mainGrid: {
-        marginTop: theme.spacing.unit * 3
+      banner: {
+        marginTop: theme.spacing(3),
       },
       banner_image: {
           width: "100%",
           height: "100%"
+      },
+      date: {
+        color: theme.palette.grey[800],
+      },
+      avatar: {
+        width: theme.spacing(6),
+        height: theme.spacing(6),
+        border: `2px solid ${theme.palette.secondary.main}`
+      },
+      user_link: {
+        textDecoration: 'none',
+        color: theme.palette.primary.light
       }
   }));
 
@@ -55,38 +55,50 @@ const PostContent = (post) => {
     const classes = useStyles();
     const post_content = post.post;
 
-    const {title, body, postedBy, photo } = post_content;
+    const {title, body, postedBy, photo, date } = post_content;
     return (
     <React.Fragment>
       <CssBaseline />
-      <div className={classes.layout}>
+      <Container maxWidth={'md'}>
         <main>
           {/* Main featured post */}
-          <Grid container>
-                <Grid item md={12}>
-                    <Typography variant="h4" align="center" className={classes.post_title}>{title}</Typography>
-                </Grid>
-          </Grid>
-          <Paper className={classes.mainFeaturedPost}>
+          <div className={classes.post_head}>
             <Grid container>
-              <Grid item md={12}>
-                  <img className={classes.banner_image} src={photo}/>
-              </Grid>
+                  <Grid item md={12}>
+                      <Typography variant={"h3"} align="center" className={classes.post_title}>{title}</Typography>
+                  </Grid>
+                  <Grid container item md={12} spacing={1}>
+                      <Grid item>
+                        <Avatar alt={postedBy.username}  src={postedBy.avatar} className={classes.avatar}/>
+                      </Grid>
+                      <Grid item>
+                           <Typography 
+                              variant={"overline"}
+                              component={Link}
+                              to={`/profile/${postedBy._id}`}
+                              className={classes.user_link} 
+                              gutterBottom>
+                                @{postedBy.username} 
+                            </Typography>
+                      </Grid>
+                  </Grid>
+                <div className={classes.banner}>
+                   <Grid item xs={12}>
+                          <img className={classes.banner_image} src={photo}/>
+                  </Grid>
+                </div>  
+                 
             </Grid>
-          </Paper>
-          {/* End main featured post */}
-          <Grid container spacing={40} className={classes.mainGrid}>
-            {/* Main content */}
+          </div>
+         
+          <Grid container spacing={4} className={classes.mainGrid}>
             <Grid item xs={12} md={8}>
-              <Typography variant="title" gutterBottom>
-               @ {postedBy.username} 
+              <Typography variant={"overline"} gutterBottom>
+                {moment(date).format('MM/DD/YYYY')} 
               </Typography>
-              <Divider />
-            
             </Grid>
-            {/* End main content */}
           </Grid>
-
+          <Divider />
           <Grid container>
                 <Grid item md={12}>
                     <div className={classes.post_text}>
@@ -95,7 +107,7 @@ const PostContent = (post) => {
                 </Grid>
           </Grid>
         </main>
-      </div>
+      </Container>
     </React.Fragment>
         
     )

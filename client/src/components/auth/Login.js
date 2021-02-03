@@ -102,7 +102,7 @@ function Copyright() {
 
     //Redecrect 
     if(isAuthenticated){
-      return <Redirect to="/posts" />;
+      return <Redirect to="/" />;
     }
     return (
   <ThemeProvider theme={theme}>

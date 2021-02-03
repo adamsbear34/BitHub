@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PostCategories = ({categories, sentUpdatedCategories, current_categories }) => {
+const PostCategories = ({categories, current_categories, getUpdatedData }) => {
     const classes = useStyles();
 
     const [checked, setChecked] = useState([]);
@@ -36,9 +36,7 @@ const PostCategories = ({categories, sentUpdatedCategories, current_categories }
         current_categories.map((c) => (
             setChecked(checked => [...checked, c._id])
         ));
-        
-        sentUpdatedCategories(checked);
-    },[setChecked]);
+    },[current_categories]);
 
 
     const handleCheck = (c) => () =>  {
@@ -50,8 +48,11 @@ const PostCategories = ({categories, sentUpdatedCategories, current_categories }
             all.splice(checkCategory, 1);
         }
         setChecked(all);
-        sentUpdatedCategories(all);
     };
+
+    useEffect(() => {
+        getUpdatedData({categories: checked});
+    },[handleCheck]);
     
 
 //Display all categires
@@ -79,8 +80,7 @@ const showCategories = () => {
    
     return (
         <Fragment>
-            {showCategories()}
-            
+            {showCategories()}   
         </Fragment>
     )
 }
@@ -88,7 +88,7 @@ const showCategories = () => {
 PostCategories.propTypes = {
     categories: PropTypes.array.isRequired,
     current_categories: PropTypes.array.isRequired,
-    sentUpdatedCategories: PropTypes.func.isRequired,
+    getUpdatedData: PropTypes.func.isRequired,
 }
 
 export default PostCategories

@@ -85,9 +85,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "20px",
     fontWeight: "500",
     fonstSize: 15,
-    
-    
-    
   }
  
 

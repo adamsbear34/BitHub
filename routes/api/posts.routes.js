@@ -75,9 +75,7 @@ async (req, res) => {
 
             await newPost.save();
             try{
-             console.log(arrayOfCategories);
              const post = await Post.findByIdAndUpdate(newPost._id, {$push: {categories: arrayOfCategories}}, {new: true}).exec();
-
              const user = await  User.findById(req.user.id);
              user.posts.unshift(post);
 
@@ -132,13 +130,13 @@ router.post('/edit/:id', [
                         }
 
                         
-
                         postFields.title = title;
                         postFields.body = body;
                         postFields.slug = slugify(title).toLowerCase();
                         postFields.excerpt = smartTrim(body, 320, ' ', '...');
                         //Categories
                         arrayOfCategories = categories && categories.split(',');
+                        postFields.categories = arrayOfCategories;
                         //TODO Check for the file
                         if (req.file){
                             postFields.photo = req.file.location;
@@ -148,13 +146,10 @@ router.post('/edit/:id', [
                     });//post parse
                 }); //new post
                 try{
-                    console.log(postFields);
-                    let post = await Post.findOne({postedBy: req.user.id});
-                    if (updatedPost && post){
-                        post = await Post.findOneAndUpdate(
-                        {postedBy: req.user.id},
-                        {$push: {categories: arrayOfCategories},
-                        $set: postFields}, 
+                    
+                    if (updatedPost){
+                      const post = await Post.findByIdAndUpdate(req.params.id,
+                        {$set: postFields}, 
                         {new: true}).exec();
                         res.json(post);
                     }else{
@@ -177,7 +172,7 @@ router.post('/edit/:id', [
      */
     router.get('/', async(req, res) => {
         try{
-            const posts = await Post.find().populate('categories', ['_id', 'name', 'slug']).populate('postedBy', ['_id', 'username', 'voteCount'])
+            const posts = await Post.find().populate('categories', ['_id', 'name', 'slug']).populate('postedBy', ['_id', 'username', 'voteCount', 'avatar']);
             res.json(posts);
         }catch(err){
             console.error(err.message);
@@ -191,7 +186,7 @@ router.post('/edit/:id', [
       */
      router.get('/:id', async(req, res) => {
         try{
-            const post = await Post.findById(req.params.id).populate('categories', ['_id', 'name', 'slug']).populate('postedBy', ['_id', 'username', 'voteCount']); 
+            const post = await Post.findById(req.params.id).populate('categories', ['_id', 'name', 'slug']).populate('postedBy', ['_id', 'username', 'voteCount', 'avatar']); 
             if(!post){
                 return res.status(404).json({msg: 'Post is not fount'});
             }
@@ -260,8 +255,8 @@ router.post('/edit/:id', [
     router.post('/vote/:id', auth, async (req, res) => {
         const { voteType } = req.body;
         try{
-            const post = await Post.findById(req.params.id); 
 
+            const post = await Post.findById(req.params.id); 
             if (voteType == "up"){
                 //if user upvoted the post already
                if (post.upVote.filter(vote => vote.user.toString() === req.user.id).length > 0){
@@ -275,13 +270,14 @@ router.post('/edit/:id', [
                }
 
                //Added the user to array of upvotes
-               post.upVote.unshift({ user: req.user.id});
+               post.upVote.unshift({ user: req.user.id });
                post.voteCount += 1
                await post.save();
-               res.json(post.voteCount);
+
             }
 
             if (voteType == "down"){
+
                 //if user devoted the post already
                 if (post.deVote.filter(vote => vote.user.toString() == req.user.id).length > 0){
                     return res.status(400).json({errors: [{message: 'You have already down voted this post'}]});
@@ -296,11 +292,10 @@ router.post('/edit/:id', [
                 post.deVote.unshift({ user: req.user.id});
                 post.voteCount -= 1
                 await post.save();
-                res.json(post.voteCount);
             }
             
 
-            
+            res.json(post.voteCount);
         }catch(err){
             console.error(err.message);
             res.status(500).send('Server Error');

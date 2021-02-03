@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 //CSS
 const useStyles = makeStyles((theme) => ({
     btn_group: {
-        width: 200
+        width: 180
     }
 }));
 
@@ -23,20 +23,24 @@ const GuestLinks = props => {
                 justify="flex-end"
                 className={classes.btn_group}
             >
-                <Grid item>
+                <Grid item xs={6}>
                     <Button 
                     variant="outlined"
-                    color="secondary" 
+                    color="secondary"
+                    fullWidth
+                    size={"small"} 
                     component={Link} to={'/login'}
                     className={classes.guest_btn}
                     >
                     Log In
                     </Button>
                 </Grid>
-                <Grid item>
+                <Grid item xs={6}>
                 <Button
                     color="secondary" 
                     variant="outlined" 
+                    fullWidth
+                    size={"small"}
                     component={Link} to={'/register'} 
                     >
                     Sign up

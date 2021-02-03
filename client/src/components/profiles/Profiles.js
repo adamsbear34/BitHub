@@ -29,8 +29,6 @@ const Profiles = ({ getProfiles, profile: {profiles, loading}}) => {
           <Fragment>
               <Container maxWidth="md">
                   <Grid container spacing={2}>
-                        
-
                         {profiles.length > 0 ? (
                             profiles.map(profile => (
                                 <ProfileItem key={profile._id} profile={profile} />

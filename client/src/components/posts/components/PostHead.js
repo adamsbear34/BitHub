@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const PostHead = ({current_image, getUpdatedImage}) => {
+const PostHead = ({current_image, getUpdatedData }) => {
     const classes = useStyles();
     const [updated_image, setImage ] = useState();
     const [selectedFile, setSelectedFile] = useState();
@@ -33,7 +33,7 @@ const PostHead = ({current_image, getUpdatedImage}) => {
         }
         const objectUrl = URL.createObjectURL(selectedFile);
         setImage(objectUrl);
-        getUpdatedImage(selectedFile);
+        getUpdatedData({ image: selectedFile});
 
         return () => URL.revokeObjectURL(objectUrl);
 
@@ -80,7 +80,7 @@ const PostHead = ({current_image, getUpdatedImage}) => {
 
 PostHead.propTypes = {
     current_image: PropTypes.string.isRequired,
-    getUpdatedImage: PropTypes.func.isRequired,
+    getUpdatedData: PropTypes.func.isRequired,
 }
 
 export default PostHead

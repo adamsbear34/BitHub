@@ -24,6 +24,7 @@ import Posts from './components/posts/PostList/Posts';
 import PostForm from './components/posts/PostForm';
 import TrackerView from './components/tracker/TrackerView';
 import EditPostForm from './components/posts/editPost/EditPostForm';
+import SearchResults from './components/search/SearchResult';
 //Design
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -55,6 +56,7 @@ const App = () => {
                     <Route exact path="/posts/:id" component={PostView} />
                     <Route exact path="/posts" component={Posts} />
                     <Route exact path="/tracker" component={TrackerView}/>
+                    <Route exact path="/search" component={SearchResults}/>
                     <Route exact path="/category/:id" component={Category} />
                     <PrivateRoute exact path="/post/edit/:id" component={EditPostForm} />
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
