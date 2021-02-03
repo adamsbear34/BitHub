@@ -1,5 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import './App.css';
+
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 //Components
 import Navbar from './components/layout/Navbar/Navbar';
