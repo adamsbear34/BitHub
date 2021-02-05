@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 
 //Materiual Ui
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +12,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
 
@@ -101,10 +99,17 @@ const useStyles = makeStyles((theme) => ({
 const ProfileLayout = ({ profile }) => {
     const classes = useStyles();
 
+    //App bar state
     const [value, setValue] = React.useState(0);
 
+    /**
+     * 
+     * @param {*} event 
+     * @param {*} newValue
+     *  Handling the app bar state
+     */
     const handleChange = (event, newValue) => {
-    setValue(newValue);
+        setValue(newValue);
     };
 
     return (

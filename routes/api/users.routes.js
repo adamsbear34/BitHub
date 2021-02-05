@@ -4,7 +4,9 @@ const router = Router();
 const User = require('../../models/user');
 
 
-
+/**
+ * Get user by id
+ */
 router.get('/', auth, async (req, res) => {
 
     try {

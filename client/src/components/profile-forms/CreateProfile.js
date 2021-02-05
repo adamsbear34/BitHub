@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { createProfile } from '../../actions/profile';
-import {Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 //Material Ui
 import Avatar from '@material-ui/core/Avatar';
@@ -17,6 +17,7 @@ import Container from '@material-ui/core/Container';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+//CSS
 const theme = createMuiTheme({
     palette: {
        primary: {
@@ -26,7 +27,6 @@ const theme = createMuiTheme({
           main: "#7200ca" //Another orange-ish color
                   }
              },
-    //fontFamily: font // as an aside, highly recommend importing roboto font for Material UI projects! Looks really nice
  });
 
 
@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+
   function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -66,6 +67,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateProfile = ({ createProfile, history }) => {
     const classes = useStyles();
+
+    //User profile data sate
     const [formData, setFormData] = useState({
         bio: '',
         title: '',
@@ -82,7 +85,19 @@ const CreateProfile = ({ createProfile, history }) => {
         telegram,
     } = formData;
 
+    /**
+     * 
+     * @param {*} e 
+     * Setting profile data sate
+     */
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
+
+    /**
+     * 
+     * @param {*} e
+     * Calling API profile routes
+     * Creating new profile 
+     */
     const onSubmit = e => {
         e.preventDefault();
         createProfile(formData, history);
@@ -104,6 +119,8 @@ const CreateProfile = ({ createProfile, history }) => {
             <Grid item xs={12}>
                 <TextField
                 name="title"
+                placeholder={"What do you do in crypto industry?"}
+                required
                 value={title}
                 onChange={e => onChange(e)}
                 variant="outlined"
@@ -116,6 +133,7 @@ const CreateProfile = ({ createProfile, history }) => {
             <Grid item xs={12}>
                 <TextField
                 id="outlined-multiline-static"
+                placeholder={"Tell us somthing about your self"}
                 label="Bio"
                 multiline
                 rows={4}

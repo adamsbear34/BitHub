@@ -3,6 +3,11 @@ const router = express.Router();
 const Post = require('../../models/Posts');
 
 
+/**
+ * Analytics route
+ * Collecting user satistic data
+ * Sending user sending data
+ */
 router.get('/:id', async(req, res) => {
     try{
         var data = {};

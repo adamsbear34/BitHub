@@ -1,14 +1,12 @@
-import React, {Fragment} from 'react'
+import react from 'react'
 import PropTypes from 'prop-types'
 
 //Componentes
-import banner from '../../../../images/banner_2.svg';
+import banner from '../../../../images/bithub_banner.svg';
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+
 
 //CSS
 const useStyles = makeStyles((theme) => ({
@@ -17,10 +15,15 @@ const useStyles = makeStyles((theme) => ({
       height: 'auto',
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(4),
+      [theme.breakpoints.down('xs')]: {
+        marginTop: theme.spacing(1),
+        marginRight: theme.spacing(0),
+        height: "100%"
+      }
     },
     cover_image: {
         width: "100%",
-        height: "auto"
+        height: "auto",
     }
   }));
 

@@ -23,8 +23,15 @@ const useStyles = makeStyles((theme) => ({
 const TextEditor = ({currentBody, getUpdatedData}) => {
     const classes = useStyles();
 
+    //Body state
     const [body, setBody] = useState(currentBody);
 
+
+    /*
+    * UseEffect  
+    * Setting body state    
+    * 
+    */
     useEffect(() => {
         setBody(currentBody);
     }, [currentBody]);
@@ -47,11 +54,20 @@ const TextEditor = ({currentBody, getUpdatedData}) => {
         'link'
       ] 
     
-      
+    
+    /**
+     * 
+     * @param {*} e
+     * Setting body state from the input 
+     */  
     const handleBody = (e) =>{
         setBody(e);
     };
 
+    /**
+     * UseEffect
+     * Sending body to the parent componet
+     */
     useEffect(() => {
         getUpdatedData({body: body});
     }, [handleBody]);

@@ -5,8 +5,9 @@ import {
 } from './types';
 
 
-
-//Get all coins 
+/**
+ * Get All crypto market data
+ */
 export const getCoins = () => async dispatch => {
     try {
         const res = await axios.get('/api/coins');

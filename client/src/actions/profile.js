@@ -18,7 +18,9 @@ import {
 
 
 
-//Get current users profile
+/**
+ * Getting authentificated user profile
+ */
 export const getCurrentProfile = () => async dispatch => {
     dispatch({
         type: GET_PROFILE_REQUEST
@@ -40,7 +42,9 @@ export const getCurrentProfile = () => async dispatch => {
     }
 };
 
-//Get all profiles
+/**
+ * Getting all existing profiles
+ */
 export const getProfiles = () => async dispatch => {
     dispatch({ type: CLEAR_PROFILE })
     try {
@@ -57,7 +61,11 @@ export const getProfiles = () => async dispatch => {
     }
 };
 
-//Get Profile by ID
+/**
+ * 
+ * @param {*} userId 
+ * Get existing profile by Id
+ */
 export const getProfileByID = userId => async dispatch => {
     dispatch({
         type: GET_PROFILE_REQUEST
@@ -79,7 +87,14 @@ export const getProfileByID = userId => async dispatch => {
 
 };
 
-// Create or update profile
+/**
+ * 
+ * @param {*} formData 
+ * @param {*} history 
+ * @param {*} edit 
+ * Creating new profiel
+ * Updating profile if it exists
+ */
 export const createProfile = (formData, history, edit = false) => async dispatch => {
     dispatch({
         type: GET_PROFILE_REQUEST
@@ -109,7 +124,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
     } catch (err) {
         const errors = err.response.data.errors;
         if(errors){
-            errors.forEach(error => dispatch(setAlert(error.message, 'error')));
+            errors.forEach(error => dispatch(setAlert(error, 'error')));
         }
           dispatch({
             type: PROFILE_ERROR,
@@ -118,6 +133,11 @@ export const createProfile = (formData, history, edit = false) => async dispatch
     }
 };
 
+/**
+ * 
+ * @param {*} formData 
+ * Adding cryptocurrency data to the profile 
+ */
 export const addCoin = (formData) => async dispatch => {
     const config = {
         headers: {
@@ -143,7 +163,11 @@ export const addCoin = (formData) => async dispatch => {
     }
 };
 
-//Get users coins by id 
+/**
+ * 
+ * @param {*} id 
+ * Getting existig profile cryptocurrency data
+ */
 export const getUserCoins = (id) => async dispatch => {
     try {
         const res = await axios.get(`/api/coins/${id}`);
@@ -162,7 +186,12 @@ export const getUserCoins = (id) => async dispatch => {
 };
 
 
-//Delete coin from user portfolio
+/**
+ * 
+ * @param {*} coin_id 
+ * Deleting cryptocurrency data from the 
+ * existing profile
+ */
 export const deleteUserCoin = (coin_id) => async dispatch => {
     try {
         const res = await axios.delete(`/api/coins/${coin_id}`);
@@ -180,8 +209,12 @@ export const deleteUserCoin = (coin_id) => async dispatch => {
 };
 
 
-//Get user stats
 
+/**
+ * 
+ * @param {*} userId 
+ * Getting existing profile stats
+ */
 export const getUserStats = (userId) => async dispatch => {
     try{
         const res = await axios.get(`/api/analytics/${userId}`);
@@ -197,7 +230,11 @@ export const getUserStats = (userId) => async dispatch => {
     }
 };
 
-//Upload User Image
+/**
+ * 
+ * @param {*} formData 
+ * Uploading exsting profile avatar
+ */
 export const uploadProfileImage = (formData) => async dispatch => {
     const config = {
         headers: {

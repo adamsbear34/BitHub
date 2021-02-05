@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 //Components
@@ -9,10 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 //CSS
 const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-     
-    }
+ 
 }));
 
 const NavBar = () => {

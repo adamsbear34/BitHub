@@ -72,43 +72,65 @@ const useStyles = makeStyles((theme) => ({
 const PostForm = ({ addPost, getCategories, categories: {categories, loading}, post: {status, uploading}, history }) => {
     const classes = useStyles();
 
-    //States
+    //Post field staes
     const [values, setFormData] = useState({
        title: '',
        formData: ''
     });
+    //Post body state
     const [body, setBody] = useState({});
+
     const {
         title,
         formData
     } = values;
 
+    //Categories state
     const [checked, setChecked] = useState([]);
     
-    //Function cals
+    /*
+    * UseEffect
+    * Calling API post routes
+    * Sending post data
+    */
     useEffect(() => {
         setFormData({...values, formData: new FormData()});
         initCategoties();
     }, []);
 
+    /*
+    * initCategories
+    * Calling API to get all categories
+    */
     const initCategoties = () => {
         getCategories();   
     }
 
   
-    //Actions
+    /*
+    * OnChange
+    * Setting form data sate
+    */
     const onChange = name => e => {
-        const value = name == 'image' ? e.target.files[0] : e.target.value;
+        const value = name === 'image' ? e.target.files[0] : e.target.value;
         formData.set(name, value);
         setFormData({...values, [name]: value, formData});
        
     };
     
+    /*
+    * handleBody
+    * Setting post body state
+    */
     const handleBody = (e) => {
         setBody(e);
         formData.set('body', e);
     }
 
+    /*
+    * handleCheck
+    * Setting categories state
+    */
     const handleCheck = (c) => () =>  {
         const checkCategory = checked.indexOf(c);
         const all = [...checked];
@@ -121,12 +143,17 @@ const PostForm = ({ addPost, getCategories, categories: {categories, loading}, p
         formData.set('categories', all);
     }
 
+    /*
+    * onSubmit   
+    * Calling API post route
+    * Creating new post
+    */
     const onSubmit = (e) => {
         e.preventDefault();
         addPost(formData, history)
     }
-    //Layout
 
+//Layout
   const modules = {
         toolbar: [
           [{ 'header': [1, 2, false] }],
@@ -143,7 +170,8 @@ const PostForm = ({ addPost, getCategories, categories: {categories, loading}, p
         'list', 'bullet', 'indent',
         'link', 
       ] 
-
+    
+    //Redirecting user if post created
     if (status){
         return <Redirect to="/" />
     }

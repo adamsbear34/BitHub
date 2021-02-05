@@ -2,26 +2,25 @@ import React, { Fragment, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProfiles } from '../../actions/profile';
+
+//Component
 import ProfileItem from './ProfileItem'
+
 //Materiaul Ui
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Profiles = ({ getProfiles, profile: {profiles, loading}}) => {
+   
+    /**
+     * UseEffect
+     * Calling API profile routes
+     * Reciving all profiels
+     */
     useEffect(() => {
         getProfiles();
-    }, []);
+    }, [getProfiles]);
 
     return (
         <Fragment>

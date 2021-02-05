@@ -6,13 +6,14 @@ const User = require('../../models/user');
 const {check, validationResult} = require('express-validator');
 const { populate } = require('../../models/user');
 const upload = require('../../middleware/file-upload');
+const { newPorfileRules, validate } = require('../../functions/validator'); 
 
 const singleUpload = upload.single('image');
 
-//Get current user profile 
+/**
+ * Geting current user profile
+ */
 router.get('/me', auth, async (req, res) => {
-
-
     try {
         const profile = await  Profile.findOne({ user: req.user.id})
         .populate({
@@ -39,21 +40,15 @@ router.get('/me', auth, async (req, res) => {
 
 
 
-//Create or update user profile
+/**
+ * Create / Update profile
+ */
 router.post(
     '/', 
-[
-    auth, 
-    [
-    check('title', 'You title is required').not().isEmpty()
-    ]
-], 
- async (req, res) => {
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array});
-    }
+    auth,
+    newPorfileRules(),
+    validate,    
+    async (req, res) => {
 
     const {
         status,
@@ -126,7 +121,6 @@ router.post(
             select: "title photo excerpt date"
             }
         });
-        console.log(newProfile);
         res.json(newProfile);
     }catch(err){
         console.error(err.message);
@@ -136,7 +130,9 @@ router.post(
  });
 
 
- //Upload Image
+ /**
+  * Upload avatar image for existing profile
+  */
  router.post('/image-upload', auth, async (req, res) => {
 
     try{
@@ -168,7 +164,9 @@ router.post(
 
 
 
- //Get All profiles 
+ /**
+  * Get all existing profile
+  */
  router.get('/', async(req, res) => {
 
     try {
@@ -181,7 +179,9 @@ router.post(
  });
 
 
- //Get All profiles by suer id
+ /**
+  * Get existing profile by id
+  */
  router.get('/user/:user_id', async (req, res) => {
 
     try {
@@ -210,12 +210,12 @@ router.post(
 
 
 
- //Delete User
+ /**
+  * Delete existing profile
+  */
  router.delete('/', auth, async(req, res) => {
 
     try {
-
-
         //Remover profile
          await Profile.findOneAndRemove({ user: req.user.id});
         //Remove user

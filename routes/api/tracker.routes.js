@@ -23,7 +23,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Get users coins
+/**
+ * Get profiel crypocurrency market data 
+ */
 router.get('/:id', async(req, res) => {
     try{
         const profile =  await Profile.findOne({user: req.params.id});
@@ -40,7 +42,9 @@ router.get('/:id', async(req, res) => {
     }
 });
 
-//Get coin by coinId
+/*
+ * Get coin by coinId
+ */
 router.get(`/:coinId`, async (req, res) => {
     try {
         const  data = await CoinGeckoClient.simple.price({ids: `${req.params.coinId}`, vs_currencies: 'usd'});
@@ -52,7 +56,9 @@ router.get(`/:coinId`, async (req, res) => {
 });
 
 
-//Add to fav
+/**
+ * Add cryptocurrency data to user profile
+ */
 router.post('/addFavorite', [auth], async (req, res) => {
     try{
 
@@ -89,7 +95,10 @@ router.post('/addFavorite', [auth], async (req, res) => {
 });
 
 
-//Remove from Fav
+/**
+ * Delete cryptocurrency data from 
+ * the profile
+ */
 router.delete('/:coin_id', [auth], async (req, res) => {
     const coinId = req.params.coin_id;
     try{

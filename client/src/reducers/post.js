@@ -6,8 +6,6 @@ import{
     GET_POST,
     ADD_COMMENT,
     REMOVE_COMMENT,
-    UP_VOTE,
-    DE_VOTE,
     DELETE_POST,
     UPDATE_POST,
     UPLOADING_POST,
@@ -104,7 +102,7 @@ export default function(state = initialState, action) {
                 ...state,
                 post: {
                     ...state.post,
-                    coments: state.post.coments.filter(coment => coment._id != payload)
+                    coments: state.post.coments.filter(coment => coment._id !== payload)
                 },
                 loading: false
             }

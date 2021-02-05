@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { setAlert } from './alert';
 import {
     GET_CATEGORIES,
     CATEGORIES_ERROR,
@@ -11,7 +10,9 @@ import {
 
 
 
-//Get all categories
+/**
+ * Getting all categories
+ */
 export const getCategories = () => async dispatch => {
     dispatch({
         type: GET_CATEGORY_REQUEST
@@ -31,7 +32,11 @@ export const getCategories = () => async dispatch => {
 };
 
 
-
+/**
+ * 
+ * @param {*} categoryId
+ * Geting category by Id 
+ */
 export const getCategoriesById = (categoryId) => async dispatch => {
     dispatch({
         type: GET_CATEGORY_REQUEST

@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 
 //CSS
@@ -22,10 +20,16 @@ const useStyles = makeStyles((theme) => ({
 
 const PostHead = ({current_image, getUpdatedData }) => {
     const classes = useStyles();
+    //Image state
     const [updated_image, setImage ] = useState();
     const [selectedFile, setSelectedFile] = useState();
     
 
+    /**
+     * UseEffect
+     * Recing image from the parent component
+     * Setting image to the state
+     */
     useEffect(() => {
         if (!selectedFile){
             setImage(current_image);
@@ -40,7 +44,11 @@ const PostHead = ({current_image, getUpdatedData }) => {
     }, [selectedFile]);
 
 
-
+    /**
+     * 
+     * @param {*} e
+     * Handling Image upload 
+     */
     const handleImageUpload = e => {
         if (!e.target.files || e.target.files.length === 0) {
             setSelectedFile(undefined);

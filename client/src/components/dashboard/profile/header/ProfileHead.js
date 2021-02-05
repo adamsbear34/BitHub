@@ -1,17 +1,15 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { uploadProfileImage } from 'actions/profile';
 //Material UI
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import { Button} from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
@@ -82,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
   
   }));
 
+ /*
+  * Profile stats summury card
+  */
 export function SummaryCard({ title, value, component }) {
     const classes = useStyles();
 
@@ -105,6 +106,11 @@ export function SummaryCard({ title, value, component }) {
 const ProfileHead = ({ profile, auth, uploadProfileImage }) => {
     const classes = useStyles();
 
+    /*
+    * handleImageUpload
+    * Reciving user avatar from input
+    * Calling API profile routes
+    */
     const handleImageUpload = e => {
         if (!e.target.files || e.target.files.length === 0) {
             return;

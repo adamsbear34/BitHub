@@ -1,12 +1,14 @@
-import React, { Fragment, useEffect, useState} from 'react'
+import React, { Fragment, useState} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { addComment } from 'actions/post';
 
+//Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Button, Container, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 
+//CSS
 const useStyles = makeStyles((theme) => ({
     container: {
         width: "100%",
@@ -33,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
 const CreateDiscussion = ({ postId, addComment, auth}) => {
     const classes = useStyles();
 
+    //Comment text state
     const [text, setText ] = useState('');
-    console.log(text);
+    
     return (
         <Fragment>
                 <CssBaseline />

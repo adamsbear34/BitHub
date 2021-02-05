@@ -10,10 +10,9 @@ import TextEditor from '../../components/TextEditor';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {Link} from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+//CSS
 const useStyles = makeStyles((theme) => ({
     layout: {
         width: "auto",
@@ -30,14 +29,17 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(8)
     }
 
-  }));
+}));
+
 
 const EditPostView = ({post, categories, sentFormData}) => {
     const classes = useStyles();
+
     var postCategories = [];
     post.categories.map(c => {
         postCategories.push(c._id);
     });
+    //Post title 
     const [updatedTitle, setTitle] = useState(post.title);
 
 
@@ -47,14 +49,29 @@ const EditPostView = ({post, categories, sentFormData}) => {
         categories: postCategories
     };
 
+    /**
+     * UseEffect
+     * Setting title stae
+     */
     useEffect(() => {
         setTitle(post.title);
     },[post.title]);
 
+    /**
+     * 
+     * @param {*} e
+     * Setting title state from the input 
+     */
     const handleTitle = (e) => {
         setTitle(e.target.value);
     };
 
+    /**
+     * 
+     * @param {*} data 
+     * Bulding form data object 
+     * Sending data to the parent component
+     */
     const hadleUpdatedData = (data) => {
         if (data.image){
             formData.image = data.image;

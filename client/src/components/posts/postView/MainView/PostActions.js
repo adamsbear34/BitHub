@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { updateVote } from 'actions/post';
@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import { Button, Container, Grid, ButtonGroup, Typography } from '@material-ui/core';
+import { Button, Container, ButtonGroup } from '@material-ui/core';
 
 
 
@@ -65,12 +65,18 @@ const PostActions = ({ updateVote, post}) => {
 
     const {_id, voteCount}= post;
 
-    //const [voteType, setVoteType] = useState('')
+    
     var voteType = ''
+
+    /**
+     * 
+     * @param {*} type 
+     * @param {*} postId
+     * Calling API post routes
+     * Sending vote action
+     */
     const vote = ( type, postId) => {
         voteType = type;
-        console.log(voteType);
-        console.log(postId);
         //Make request
         updateVote(postId, { voteType });
     };

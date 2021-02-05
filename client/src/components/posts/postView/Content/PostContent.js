@@ -56,6 +56,8 @@ const PostContent = (post) => {
     const post_content = post.post;
 
     const {title, body, postedBy, photo, date } = post_content;
+
+
     return (
     <React.Fragment>
       <CssBaseline />
@@ -84,7 +86,7 @@ const PostContent = (post) => {
                   </Grid>
                 <div className={classes.banner}>
                    <Grid item xs={12}>
-                          <img className={classes.banner_image} src={photo}/>
+                          <img className={classes.banner_image} src={photo} alt={"Post Image"}/>
                   </Grid>
                 </div>  
                  

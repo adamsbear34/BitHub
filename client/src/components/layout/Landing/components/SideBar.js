@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+
 
 //CSS
 const useStyles = makeStyles((theme) => ({
@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         backgroundColor: theme.palette.primary.main, 
         color: theme.palette.grey
+    },
+    about_text: {
+        color: "#fafafa",
     }
 }));
 
@@ -29,7 +32,12 @@ const SideBar = ({props}) => {
             <Typography variant="h6" gutterBottom color={"secondary"}>
                 About
             </Typography>
-                <Typography>Welcome to BitHub!</Typography>
+                <Typography className={classes.about_text}>
+                    Welcome to BitHub!
+                    A place where you can learn about blockchain,
+                    сreate and promote your community and teach 
+                    people the knowledge you have about blockchain.
+                </Typography>
            </Paper>
        </Grid>
     )

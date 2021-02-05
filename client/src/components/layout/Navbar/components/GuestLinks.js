@@ -11,7 +11,10 @@ import Grid from '@material-ui/core/Grid';
 //CSS
 const useStyles = makeStyles((theme) => ({
     btn_group: {
-        width: 180
+        width: 180,
+        [theme.breakpoints.down('sm')]: {
+            display: "none"
+        }
     }
 }));
 

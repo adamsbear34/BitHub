@@ -23,17 +23,9 @@ const siteViewsUp = require('../../functions/visitUp');
  * Create new post by auth user
  * Add update rating 
  */
-router.post('/', [
+router.post('/', 
     auth,
-    [
-        check('title').not().isEmpty().withMessage("Title is required")
-    ]
-], 
-async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()){
-    //     return res.status(400).json({errors: errors.array});
-    // }
+    async (req, res) => {
     try{
         let arrayOfCategories = null;
         const newPost = await new Promise(function (resolve, reject){
@@ -78,7 +70,7 @@ async (req, res) => {
              const post = await Post.findByIdAndUpdate(newPost._id, {$push: {categories: arrayOfCategories}}, {new: true}).exec();
              const user = await  User.findById(req.user.id);
              user.posts.unshift(post);
-
+             user.rating += 10;
              await user.save();
              res.json(post);
             }catch(err){
@@ -102,10 +94,7 @@ router.post('/edit/:id', [
         ]
     ], 
     async (req, res) => {
-        // const errors = validationResult(req);
-        // if (!errors.isEmpty()){
-        //     return res.status(400).json({errors: errors.array});
-        // }
+
         try{   
             let arrayOfCategories = null;
             let postFields = {};
@@ -204,29 +193,6 @@ router.post('/edit/:id', [
     });
 
 
-     //Get Post Image
-     router.get('/photo/:slug', async(req, res) => {
-
-            const slug = req.params.slug.toLowerCase();
-        try{
-            const photo = await Post.findOne({slug}).select('photo');
-
-            if (!photo){
-                return res.status(404).json({msg: 'No image for this post'});
-            }
-
-            res.set('Content-Type', photo.photo.contentType);
-            res.send(photo.photo.data);
-
-        }catch(err){
-            console.error(err.message);
-            res.status(500).send('Server Error');
-        }
-
-
-     });
-
-
     /**
      * Delete post by id 
      */
@@ -248,15 +214,16 @@ router.post('/edit/:id', [
         }
     });
     
-    //UpVote post 
+   
     /**
-     * Up Vote post, update rating 
+     * Up Vote/Down vote post
      */
     router.post('/vote/:id', auth, async (req, res) => {
         const { voteType } = req.body;
         try{
 
             const post = await Post.findById(req.params.id); 
+            const user = await User.findById(post.postedBy);
             if (voteType == "up"){
                 //if user upvoted the post already
                if (post.upVote.filter(vote => vote.user.toString() === req.user.id).length > 0){
@@ -301,18 +268,6 @@ router.post('/edit/:id', [
             res.status(500).send('Server Error');
         }
     });
-    /**
-     * De Vote post and update rating
-     */
-    router.put('/deVote/:id', auth, async (req, res) => {
-        try{
-            const post = await Post.findById(req.params.id);
-          
-        }catch(err){
-            console.error(err.message);
-            res.status(500).send('Server Error');
-        }
-    }); 
 
 /**
  * Comment on post
@@ -340,6 +295,8 @@ router.post('/comment/:id', [auth, [
         };
 
         post.coments.unshift(newComment);
+        user.rating += 5;
+        await user.save();
         await post.save();
         res.json(post.coments);
     }catch(err){
@@ -352,11 +309,8 @@ router.post('/comment/:id', [auth, [
     });
 
 
-
-    //Delete Comment
-
     /**
-     * 
+     * Delete existing comment
      */
     router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
@@ -389,6 +343,15 @@ router.post('/comment/:id', [auth, [
             res.status(500).send('Server Error');
         }
     });
+
+    /**
+     * 
+     * @param {*} str 
+     * @param {*} length 
+     * @param {*} delim 
+     * @param {*} appendix 
+     * Trimmig function for the post excerpt
+     */
     const smartTrim = (str, length, delim, appendix) => {
         if (str.length <= length) return str;
     
@@ -404,8 +367,5 @@ router.post('/comment/:id', [auth, [
 
 
    
-
-
-
 
 module.exports = router;

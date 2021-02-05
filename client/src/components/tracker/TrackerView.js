@@ -7,17 +7,35 @@ import { getCoins } from 'actions/coins';
 import CoinTable from './CoinTable';
 
 //Material UI
-import { Grid } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+//CSS
+const useStyles = makeStyles((theme) => ({
+    loader: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+}));
+
 
 const TrackerView = ({getCoins, coins: { coins }, loading}) => {
+    const classes = useStyles();
+
+    /**
+     * UseEffect
+     * Calling API coin routes
+     * Reciving all market data
+     */
     useEffect(() => {
         getCoins();
     },[getCoins]);
 
     return <Fragment>
     { coins === null || loading ? (
-            <CircularProgress />
+        <div className={classes.loader}><CircularProgress /></div>
+            
     ) : (
         <Fragment>
            <CoinTable coins={coins} />

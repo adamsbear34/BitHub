@@ -4,20 +4,18 @@ import { connect } from 'react-redux';
 import { addCoin } from 'actions/profile';
 
 
-//Material UI
+
 //Materiau UI
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import StarsIcon from '@material-ui/icons/Stars';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
-import { Tab, withTheme } from '@material-ui/core';
+
 
 const styles = (theme) => ({
     layout: {
@@ -102,7 +100,7 @@ class CoinTable extends Component {
                                     {idx + 1}
                                 </StyledTableCell>
                                 <StyledTableCell>
-                                    <img src={coin.image} className={classes.coin_img} />
+                                    <img src={coin.image} className={classes.coin_img} alt={"cryptocurrency"}/>
                                 </StyledTableCell>
                                 <StyledTableCell className={classes.coin_name}>
                                     {coin.name}

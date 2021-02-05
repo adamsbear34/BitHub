@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+
+
+//Components
 import ProfileHead from './header/ProfileHead'
 import ProfileMenu from '../menu/ProfileMenu';
-//Material UI
 
-import Typography from '@material-ui/core/Typography';
+//Material UI
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';;
+
+//CSS
 const useStyles = makeStyles((theme) => ({
     root: {
         fontFamily: theme.typography.fontFamily,

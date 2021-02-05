@@ -6,7 +6,10 @@ const Category = require('../../models/Category');
 const Posts = require('../../models/Posts');
 const slugify = require('slugify');
 
-//Create new category
+
+/**
+ * Creating category
+ */
 router.post('/new', [
     auth,
     [
@@ -50,7 +53,9 @@ async(req, res) => {
 
 
 
-//Get all categiries
+/**
+ * Sending all the categories
+ */
 router.get('/', async (req, res) => {
     try {
         const category = await Category.find();
@@ -64,7 +69,9 @@ router.get('/', async (req, res) => {
 });
 
 
-//Get category by slug
+/**
+ * Sending requested category by id 
+ */
 router.get('/:id', async (req, res)=> {
     const id = req.params.id;
 
@@ -86,10 +93,5 @@ router.get('/:id', async (req, res)=> {
         res.status(500).send('Server Error');
     }
 });
-
-
-
-
-
 
 module.exports = router; 

@@ -15,4 +15,4 @@ const composeEnhancers = composeWithDevTools({
 
 const store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...middleware)));
 
-export default store;
+export default store; 

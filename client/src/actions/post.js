@@ -15,7 +15,9 @@ import {
 } from './types';
 
 
-//Get posts
+/**
+ * Get all posts
+ */
 export const getPosts = () => async dispatch => {
     try {
         const res = await axios.get('/api/posts');
@@ -32,8 +34,13 @@ export const getPosts = () => async dispatch => {
     }
 };
 
-//Get Post by Id
+/**
+ * 
+ * @param {*} id 
+ * Get post by id 
+ */
 export const getPost = (id) => async dispatch => {
+    dispatch({type: LOAD_POSTS});
     try {
         const res = await axios.get(`/api/posts/${id}`);
         dispatch({
@@ -50,7 +57,11 @@ export const getPost = (id) => async dispatch => {
 };
 
 
-//Add post 
+/**
+ * 
+ * @param {*} formData 
+ * Creating new post 
+ */
 export const addPost = (formData) => async dispatch => {
     dispatch({
         type: UPLOADING_POST
@@ -81,7 +92,12 @@ export const addPost = (formData) => async dispatch => {
     }
 };
 
-//Update post
+/**
+ * 
+ * @param {*} formData 
+ * @param {*} id 
+ * Updating existing post
+ */
 export const updatePost = (formData, id) => async dispatch => {
     dispatch({
         type: UPLOADING_POST
@@ -114,7 +130,11 @@ export const updatePost = (formData, id) => async dispatch => {
 };
 
 
-//Delete post
+/**
+ * 
+ * @param {*} postId 
+ * Deleting existing post
+ */
 export const deletePost = postId => async dispatch => {
     try {
         const res = await axios.delete(`/api/posts/${postId}`);
@@ -132,7 +152,12 @@ export const deletePost = postId => async dispatch => {
 }; 
 
 
-//Upvote
+/**
+ * 
+ * @param {*} postId 
+ * @param {*} formData 
+ * Updating existing post votes
+ */
 export const updateVote = (postId, formData) => async dispatch => {
     const config = {
         headers: {
@@ -161,7 +186,11 @@ export const updateVote = (postId, formData) => async dispatch => {
 
 
 
-//Search by post
+/**
+ * 
+ * @param {*} query 
+ * Getting posts searched by query 
+ */
 export const searchPostByTitle = (query) => async dispatch => {
     dispatch({
         type: LOAD_POSTS
@@ -181,7 +210,12 @@ export const searchPostByTitle = (query) => async dispatch => {
 };
 
 
-//Add comment
+/**
+ * 
+ * @param {*} postId 
+ * @param {*} formData 
+ * Adding comment to the existing post
+ */
 export const addComment = (postId, formData) => async dispatch => {
         const config = {
             headers: {
@@ -203,7 +237,12 @@ export const addComment = (postId, formData) => async dispatch => {
         }
 };
 
-//Delete Comment 
+/**
+ * 
+ * @param {*} postId 
+ * @param {*} commentId 
+ * Deleting existing post
+ */
 export const deleteComment = (postId, commentId) => async dispatch => {
     try{
         const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);

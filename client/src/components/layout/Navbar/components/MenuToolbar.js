@@ -2,14 +2,14 @@ import React, {Fragment, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCategories } from '../../../../actions/categories'; 
-import  { Redirect, Link} from 'react-router-dom'
+import  {Link} from 'react-router-dom'
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-
 import { Button } from '@material-ui/core';
 
+//CSS
 const useStyles = makeStyles((theme) => ({
     menu_tool_bar: {
         backgroundColor: theme.palette.primary,
@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
 const MenuToolbar = ({ getCategories, categories: {categories, loading} }) => {
     const classes = useStyles();
 
+    /*
+    * UseEffect
+    * Calling API categories route
+    * Reciving all the categories
+    */
     useEffect(() => {
         getCategories();
     },[getCategories]);

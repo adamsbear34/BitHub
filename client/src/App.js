@@ -27,8 +27,8 @@ import TrackerView from './components/tracker/TrackerView';
 import EditPostForm from './components/posts/editPost/EditPostForm';
 import SearchResults from './components/search/SearchResult';
 //Design
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './theme';
 
 if(localStorage.token){

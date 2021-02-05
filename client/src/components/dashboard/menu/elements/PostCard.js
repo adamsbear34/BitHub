@@ -15,10 +15,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -61,11 +58,12 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.primary
     }
       
-    }
-  }));
+  }
+}));
 
 
 const PostCard = ({ deletePost, post, user, auth}) => {
+    
     const classes = useStyles();
     
     return (

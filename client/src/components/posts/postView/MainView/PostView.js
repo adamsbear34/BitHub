@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState } from 'react';
+import React, {Fragment, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPost} from 'actions/post';
@@ -9,12 +9,17 @@ import Discussions from '../Discussions/Discussions';
 import PostActions from './PostActions';
 //Material Ui 
 import { Grid } from '@material-ui/core';
-import { useStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
 const PostView = ({ getPost, post: {post, loading }, match}) => {
+    
+    /**
+     * UseEffect
+     * Calling API post route
+     * Reciving requested post
+     */
     useEffect(() => {
         getPost(match.params.id);
     },[getPost]);

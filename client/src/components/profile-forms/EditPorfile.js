@@ -3,26 +3,20 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
 import {Link} from 'react-router-dom';
+
 //Material Ui
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-
-
-
-
+//CSS
 const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -58,6 +52,8 @@ const useStyles = makeStyles((theme) => ({
 
 const EditPorfile = ({ profile: {profile, loading}, createProfile, getCurrentProfile, history }) => {
     const classes = useStyles();
+
+    //Profile data state
     const [formData, setFormData] = useState({
         bio: '',
         title: '',
@@ -65,6 +61,13 @@ const EditPorfile = ({ profile: {profile, loading}, createProfile, getCurrentPro
         instagram: '',
         telegram: '',
     });
+
+    /**
+     * UseEffect
+     * Calling API profile routes
+     * Reciving current user profile
+     * Setting profile data state
+     */
     useEffect(()=>{
         getCurrentProfile();
         setFormData({
@@ -86,7 +89,19 @@ const EditPorfile = ({ profile: {profile, loading}, createProfile, getCurrentPro
         telegram,
     } = formData;
 
+    /**
+     * 
+     * @param {*} e 
+     * Setting user profile data from the inputs
+     */
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
+
+    /**
+     * 
+     * @param {*} e
+     * Calling API profile routes
+     * Updating profile 
+     */
     const onSubmit = e => {
         e.preventDefault();
         createProfile(formData, history, true);

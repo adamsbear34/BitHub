@@ -5,33 +5,32 @@ import { connect } from 'react-redux';
 import { logout } from '../../../../actions/auth';
 
 //Material UI 
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-//CSS
-const useStyles = makeStyles((theme) => ({
-        
-}));
+import MenuItem from '@material-ui/core/MenuItem';
+
+
+
 
 const AuthLinks = ({ logout }) => {
 
-    const classes = useStyles();
+    //Drop down menue state    
     const [anchorEl, setAnchorEl] = React.useState(null);
+
     const open = Boolean(anchorEl);
 
-
+    /*
+    * handleMenu
+    * Handleing menu itmes
+    */
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    
+     /*
+    * handleClose
+    * Closing menu
+    */
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -62,6 +61,7 @@ const AuthLinks = ({ logout }) => {
                 open={open}
                 onClose={handleClose}
               >
+                <MenuItem onClick={handleClose} component={Link} to={'/'}>Home</MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to={'/dashboard'}>Dashboard</MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to={'/create-post'}>Add Post</MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to={'/profiles'}>Profiles</MenuItem>

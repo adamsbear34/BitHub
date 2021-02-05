@@ -4,6 +4,10 @@ const router = express.Router();
 const Post = require('../../models/Posts');
 
 
+/**
+ * Search route
+ * Get all the posts matching search query
+ */
 router.get('/',  async(req, res)=>{
     try{
         if (req.query.search){
@@ -23,7 +27,11 @@ router.get('/',  async(req, res)=>{
 });
 
 
-
+/**
+ * 
+ * @param {*} text 
+ * ReGex function
+ */
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }

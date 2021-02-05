@@ -2,6 +2,12 @@ import {SET_ALERT, REMOVE_ALERT} from './types';
 import {v4 as uuid} from "uuid"; ;
 
 
+/**
+ * 
+ * @param {*} msg 
+ * @param {*} alertType
+ * Creating an alert action 
+ */
 export const setAlert = (msg, alertType) => dispatch => {
     const id = uuid();
     dispatch({

@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 
@@ -7,10 +7,6 @@ import { Bar } from 'react-chartjs-2';
 //Material UI 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 
@@ -32,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+/*
+ * Summary cards    
+*/
 export function SummaryCard({ title, value, component }) {
     const classes = useStyles();
 
@@ -50,6 +49,9 @@ export function SummaryCard({ title, value, component }) {
   }
 
 
+  /*
+  * User Stats charts
+  */
 export function BarChart({ data, title, label }){
     const classes = useStyles();
 
@@ -74,8 +76,6 @@ export function BarChart({ data, title, label }){
                    
                 }}
             />
-
-            
         </Paper>
     );
 };
@@ -84,7 +84,7 @@ export function BarChart({ data, title, label }){
 const StatsLyaout = ({data: {total_views, total_vote_count, single_posts_views_stats, single_posts_votes_stats}}) => {
     const classes = useStyles();
     
-
+    //Setting up charts
     const formatData = (dataObjcet) => {
         var lables = [],
             data = [],

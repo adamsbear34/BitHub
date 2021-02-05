@@ -19,7 +19,6 @@ import Fade from '@material-ui/core/Fade'
 
 //CSS
 const useStyles = makeStyles((theme) => ({
-
     btn_layout:{
       width: "auto",
         marginLeft: theme.spacing(3),
@@ -43,7 +42,13 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
       },
-  }));
+      loader: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+   
+}));
 
 const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading, status, uploading}, categories: {categories}, auth, match}) => {
     const classes = useStyles();
@@ -105,7 +110,9 @@ const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading
     return (
         <Fragment>
             {loading || post === null ? (
-                <CircularProgress />
+                <div className={classes.loader}>
+                   <CircularProgress /> 
+                </div>
             ):(
                 <Fragment>
                     {!auth.loading && post.postedBy._id === auth.user._id ? (

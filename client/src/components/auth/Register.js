@@ -1,5 +1,4 @@
-import React, {Fragment, useState} from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {setAlert} from '../../actions/alert';
 import PropTypes from 'prop-types';
@@ -12,8 +11,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -28,9 +25,7 @@ function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          Your Website
-        </Link>{' '}
+          BitHub{' '}
         {new Date().getFullYear()}
         {'.'}
       </Typography>
@@ -50,7 +45,7 @@ function Copyright() {
  });
 
 
-
+//CSS
 const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -74,6 +69,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
     const classes = useStyles();
+
+    //User register credentials state 
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -83,7 +80,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     });
 
     const { username, email, password, password2} = formData;
+
+    /*
+    * onChange update user credentials state from text field
+    */
     const onChange = e => setFormData({...formData, [e.target.name]:e.target.value});
+
+    /*
+    * Validating user password
+    * Submiting user credentials
+    * Callin API register route
+    */
     const onSubmit = async e => {
         e.preventDefault();
         if(password !== password2){
@@ -97,6 +104,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (isAuthenticated){
         return(<Redirect to='/dashboard' />);
     }
+
+    
     return ( 
     <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -128,6 +137,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 <TextField
                 variant="outlined"
                 fullWidth
+                required
                 id="email"
                 value={email}
                 onChange={e => onChange(e)}
@@ -140,7 +150,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <Grid item xs={12}>
                 <TextField
                 variant="outlined"
-               
+                required
                 fullWidth
                 name="password"
                 label="Password"
@@ -155,7 +165,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <Grid item xs={12}>
                 <TextField
                 variant="outlined"
-           
+                required
                 fullWidth
                 name="password2"
                 label="Confirm Password"
@@ -165,12 +175,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 id="password2"
                 autoComplete="current-password"
              
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
                 />
             </Grid>
             </Grid>
@@ -185,7 +189,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             </Button>
             <Grid container justify="flex-end">
             <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                 Already have an account? Sign in
                 </Link>
             </Grid>

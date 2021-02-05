@@ -10,9 +10,13 @@ import {
     CLEAR_PROFILE
 } from './types';
 import { setAlert} from './alert';
+import { getCurrentProfile } from './profile';
 import setAuthToken from '../utils/setAuthToken'
 
-//Load User
+
+/**
+ * Loading current user
+ */
 export const loadUser = () => async dispatch => {
     if(localStorage.token){
         setAuthToken(localStorage.token);
@@ -23,7 +27,8 @@ export const loadUser = () => async dispatch => {
         dispatch({
             type: USER_LOADED,
             payload: res.data
-        })
+        });
+        dispatch(getCurrentProfile());
     }catch(err){
         dispatch({
             type: AUTH_ERROR
@@ -33,7 +38,11 @@ export const loadUser = () => async dispatch => {
 
 
 
-//Register user
+/**
+ * 
+ * @param {*} param0 
+ * Registering new user 
+ */
 export const register = ( { username, email, password } ) => async dispatch => {
     const config = {
         headers: {
@@ -55,7 +64,7 @@ export const register = ( { username, email, password } ) => async dispatch => {
     }catch(err){
         const errors = err.response.data.errors;
         if(errors){
-            errors.forEach(error => dispatch(setAlert(error.message, 'error')));
+            errors.forEach(error => dispatch(setAlert(error, 'error')));
         }
         dispatch({
             type: REGISTER_FAIL
@@ -63,7 +72,12 @@ export const register = ( { username, email, password } ) => async dispatch => {
     }
 };
 
-//Login user
+/**
+ * 
+ * @param {*} email 
+ * @param {*} password 
+ * Signing In existing user
+ */
 export const login = (email, password) => async dispatch => {
     const config = {
         headers: {
@@ -85,7 +99,7 @@ export const login = (email, password) => async dispatch => {
     }catch(err){
         const errors = err.response.data.errors;
         if(errors){
-            errors.forEach(error => dispatch(setAlert(error.message, 'error')));
+            errors.forEach(error => dispatch(setAlert(error, 'error')));
         }
         dispatch({
             type: LOGIN_FAIL

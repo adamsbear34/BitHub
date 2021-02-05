@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import { getUserCoins } from '../../../../actions/profile';
 import PropTypes from 'prop-types';
 
+//Components
 import CoinsCard from '../elements/CoinsCard'
 
+//Material UI
 import { makeStyles} from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+//CSS
 const useStyles = makeStyles((theme) => ({
     item_layout: {
         margin: 0,
@@ -24,14 +27,21 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileCoins = ({getUserCoins, user_crypto, user, auth, loading, coins }) => {
     const classes = useStyles();
+    /*
+    * Use Effect 
+    * Callin API coins route
+    * Reciving User profile coins
+    */
     useEffect(() => {
-
+        //Checking if user can coins in profile
         if (coins.length > 0){
             getUserCoins(user._id);
         }else{
             return;
         }
     },[getUserCoins]);
+
+    
     return (
         <div className={classes.layout}>
             { user_crypto === null || loading? (

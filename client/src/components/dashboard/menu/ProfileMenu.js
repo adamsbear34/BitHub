@@ -5,15 +5,15 @@ import PropTypes from 'prop-types'
 import ProfilePosts from './tabs/ProfilePosts';
 import ProfileCoins from './tabs/ProfileCoins';
 import ProfileStats from './tabs/ProfileStats';
+
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import {Link} from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+
+//CSS
 const useStyles = makeStyles((theme) => ({
     layout: {
         width: "auto",
@@ -32,13 +32,21 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+
+
 const ProfileMenu = ({profile, auth}) => {
     const classes = useStyles();
+
+    //Open tab state
     const [value, setValue] = React.useState(0);
 
+    /*
+    * Keeping track of open tab state 
+    */
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
 
     return (
         <Fragment>

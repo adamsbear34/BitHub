@@ -1,5 +1,4 @@
-import React, {Fragment, useState} from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
@@ -25,13 +24,11 @@ import { Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 
+//
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          Your Website
-        </Link>{' '}
+        {'Copyright © '}BitHub{' '}
         {new Date().getFullYear()}
         {'.'}
       </Typography>
@@ -46,13 +43,12 @@ function Copyright() {
        secondary: {
           main: "#7200ca" //Another orange-ish color
                   }
-             },
-    //fontFamily: font // as an aside, highly recommend importing roboto font for Material UI projects! Looks really nice
+      },
  });
 
 
 
-
+//CSS
   const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -74,7 +70,7 @@ function Copyright() {
       backgroundColor: theme.palette.secondary.main,
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
+      width: '100%',
       marginTop: theme.spacing(1),
     },
     submit: {
@@ -89,12 +85,22 @@ function Copyright() {
 
  const Login = ({login, isAuthenticated}) => {
     const classes = useStyles();
+
+    //User login creditials state
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
+
     const {email, password} = formData;
+
+    //Updating form data sate on change of text fields
     const onChange = e => setFormData({...formData, [e.target.name]:e.target.value});
+
+    /*
+    * Submiting user credentials
+    * Callin API Log in route
+    */
     const onSubmit = async e => {
         e.preventDefault();
         login(email, password);
@@ -104,6 +110,7 @@ function Copyright() {
     if(isAuthenticated){
       return <Redirect to="/" />;
     }
+
     return (
   <ThemeProvider theme={theme}>
         <Grid container component="main" className={classes.root}>
@@ -162,13 +169,8 @@ function Copyright() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

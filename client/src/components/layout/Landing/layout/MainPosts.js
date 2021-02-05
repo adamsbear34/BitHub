@@ -14,7 +14,13 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const MainPosts = ({getPosts, post: {posts} }) => {
-    
+    const classes = useStyles();
+
+    /*
+    * Use Effect
+    * Calling API post routes
+    * Reciving all posts
+    */
     useEffect(() => {
         getPosts();
     },[getPosts]);

@@ -5,80 +5,82 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 //Files
 import logo_red from  '../../../../images/logo_red.svg'
+
 //Components
 import MenuToolbar from '../components/MenuToolbar';
 import GuestLinks from '../components/GuestLinks';
 import AuthLinks from '../components/AuthLinks';
+import AuthDrawer from '../components/AuthDrawer';
+import GuestDrawer from '../components/GuestDrawer';
 
 //Material UI
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import Typography from '@material-ui/core/Typography';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
 import ClearIcon from '@material-ui/icons/Clear';
 import Divider from '@material-ui/core/Divider';
-import { Flag } from '@material-ui/icons';
+
 
 //CSS 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
+      flexGrow: 1,
       borderBottom: `1px solid ${theme.palette.divider}`,
       backgroundColor: theme.palette.primary.dark,
       height: 90 ,  
-      justifyItems: "center",
-      flexGrow: 1
-    },
-    toolbarTitle: {
-      flex: 1,
-    },
-    toolbarSecondary: {
-      justifyContent: 'space-between',
-      overflowX: 'auto',
+      justifyContent: "sapce-between",
+      alignItems: "center",      
+     
     },
     toolbarLink: {
       padding: theme.spacing(1),
       flexShrink: 0,
     },
-    appbar: {
-        
+    btn_tracker:{
+      [theme.breakpoints.down('sm')]: {
+        display: "none"
+      }
+    },
+    logoHorizontallyCenter: {
+      display: "flex",
+      flex: 1,
+      justifyContent: "center",
+      
+    
     },
     logo: {
-        marginLeft: "auto",
-        marginRight: "auto",
-        textAlign: "center",
+        marginTop: theme.spacing(2),
         height: "auto",
         width: "auto",
         maxWidth: "250px",
-        maxHeight: "170px",
-        flex: 1,
+        maxHeight: "200px",
+        
+    },
+    logo_small: {
+      display: "none"
     },
     search_bar:{
       display: "flex",
       alignItems: "center",
-      marginRight: theme.spacing(1),
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
       backgroundColor: theme.palette.primary.dark,
-      width: 400,
-      height: 30
-    },
-    search: {
-     
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
+      border: `1px solid ${theme.palette.secondary.main}`,
+      width: "78%",
+      height: 30,
+      [theme.breakpoints.down('sm')]: {
         marginLeft: theme.spacing(1),
         width: 'auto',
       },
+    },
+    search_icon: {
+      padding: 0
     },
     input: {
       marginLeft: theme.spacing(1),
@@ -102,20 +104,35 @@ const useStyles = makeStyles((theme) => ({
 const NavLayout = ({ auth: { isAuthenticated, loading }, history }) => {
     const classes = useStyles();
 
+    //Searching states
     const [isSearching, setSearchingLayout] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
+    //Breakpoints
+    const theme = useTheme();
+    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
 
-
+    /*
+    * handleSearch
+    * Redirecting user to search page
+    */
     const handleSearch = (e) => {
       e.preventDefault();
       history.push(`/search?q=${searchQuery}`);
     };
 
+    /*
+    * handleSearchQuery
+    * Handling user search query
+    */
     const handleQuery = (e) => {
       setSearchQuery(e.target.value);  
     };
 
+    /*
+    * SearchLayOut
+    * Search form
+    */  
   const searchLayOut = () => {
     return (
       <Paper component="form" className={classes.search_bar}
@@ -123,8 +140,8 @@ const NavLayout = ({ auth: { isAuthenticated, loading }, history }) => {
       >
         <InputBase
           className={classes.input}
-          placeholder="Search Google Maps"
-          inputProps={{ 'aria-label': 'search google maps' }}
+          placeholder="Search..."
+          inputProps={{ 'aria-label': 'Search ' }}
           value={searchQuery}
           onChange={e => handleQuery(e)}
         />
@@ -145,31 +162,52 @@ const NavLayout = ({ auth: { isAuthenticated, loading }, history }) => {
     return (
         <AppBar position="static" className={classes.appbar} >
             <Toolbar className={classes.toolbar}>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    component={Link}
-                    size={"small"}
-                    to={'/tracker'}
-                    className={classes.btn_tracker}
-                >
-                    Tracker
-                </Button>
-                <img src={logo_red} className={classes.logo}  />
-                { !isSearching && (
-                    <IconButton
-                      onClick={e => setSearchingLayout(true)}
-                      className={classes.btn_search}
-                    >
-                        <SearchIcon />
-                    </IconButton>
-                )}
-                
-                { isSearching && (
-                  searchLayOut()
-                )}
-                          
-                { !loading && (<Fragment>{ isAuthenticated  ? <AuthLinks /> : <GuestLinks />}</Fragment>)}
+
+              { isMatch && !loading && (
+                 <Fragment>
+                   { isAuthenticated ? (
+                     <Fragment>
+                       <AuthDrawer />
+                     </Fragment>
+                   ):(
+                      <Fragment>
+                        <GuestDrawer />
+                      </Fragment>
+                   )}
+                 </Fragment>
+              )}
+
+                <Fragment>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      component={Link}
+                      size={"small"}
+                      to={'/tracker'}
+                      className={classes.btn_tracker}
+                  >
+                      Tracker
+                    </Button>
+                    {!isSearching && (
+                      <IconButton
+                        onClick={e => setSearchingLayout(true)}
+                        className={classes.btn_search}
+                        >
+                        <SearchIcon className={classes.search_icon} />
+                      </IconButton>
+                    )}
+                     { isSearching && (
+                        searchLayOut()
+                     )}
+                    <div className={classes.logoHorizontallyCenter}>
+                        <img src={logo_red} className={isSearching ? classes.logo_small : classes.logo } alt={"BitHub"} />
+                    </div>
+                    
+                    
+                  
+                   { !loading && (<Fragment>{ isAuthenticated  ? <AuthLinks /> : <GuestLinks />}</Fragment>)}
+                </Fragment>
+             
 
             </Toolbar>
             <MenuToolbar />

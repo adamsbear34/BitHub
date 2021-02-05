@@ -6,28 +6,22 @@ import PropTypes from 'prop-types'
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Button from "@material-ui/core/Button";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
-import { CodeSharp } from '@material-ui/icons';
-
-//CSS
-const useStyles = makeStyles((theme) => ({
-
-    
-}));
 
 
 const PostCategories = ({categories, current_categories, getUpdatedData }) => {
-    const classes = useStyles();
+  
 
+    //Categories check state
     const [checked, setChecked] = useState([]);
 
 
 
+    /*
+    * UseEffect   
+    * Display all the categories
+    */
     useEffect(() => {
         if (current_categories.length === 0 ){
             setChecked([]);
@@ -39,6 +33,10 @@ const PostCategories = ({categories, current_categories, getUpdatedData }) => {
     },[current_categories]);
 
 
+    /*
+    * handleCheck  
+    * handling category select
+    */
     const handleCheck = (c) => () =>  {
         const checkCategory = checked.indexOf(c);
         const all = [...checked];
@@ -50,6 +48,11 @@ const PostCategories = ({categories, current_categories, getUpdatedData }) => {
         setChecked(all);
     };
 
+    /*
+    * UseEffect   
+    * returning selected categories to 
+    * parent component
+    */
     useEffect(() => {
         getUpdatedData({categories: checked});
     },[handleCheck]);

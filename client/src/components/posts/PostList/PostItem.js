@@ -1,35 +1,33 @@
-import React, { Fragment, useEffect }from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getPostsImage } from '../../../actions/images';
 import parse from 'html-react-parser'
+
+
 //Material UI
-import { Divider, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
+
+//CSS
 const useStyles = makeStyles((theme) => ({
     root: {
       width: "80%",
       backgroundColor: theme.palette.background.default,
-      
+      [theme.breakpoints.down('xs')]: {
+        width: "100%"
+      }
     },
     header: {
       
@@ -50,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
     expandOpen: {
       transform: 'rotate(180deg)',
     },
-    avatar: {
-     
+    title:{
+      wordBreak: "break-word"
     },
     content: {
       fontSize: 15,
@@ -65,8 +63,6 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: 0
     }
   }));
-
-
 
 
 const PostItem = ({post: {_id, title, excerpt, photo, categories, postedBy, slug }, auth}) => {
@@ -99,8 +95,12 @@ const PostItem = ({post: {_id, title, excerpt, photo, categories, postedBy, slug
                           )   
                         )              
                     }
-                    titleTypographyProps={{variant: 'h5'}}
-                    title={title}
+                    
+                    title={
+                      <Typography variant={"h5"} className={classes.title}>
+                        {title}
+                      </Typography>
+                    }
                     subheader={
                       <Link className={classes.profile_link} to={`/profile/${postedBy._id}`}>{postedBy.username}</Link>
                     }

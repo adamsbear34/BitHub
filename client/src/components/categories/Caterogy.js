@@ -6,13 +6,14 @@ import {withRouter } from 'react-router-dom';
 
 //Components
 import PostItem from '../posts/PostList/PostItem';
+
 //Material UI 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
+
 //CSS
 const useStyles = makeStyles((theme) => ({
     layout: {
@@ -39,15 +40,30 @@ const useStyles = makeStyles((theme) => ({
     },
     divider: {
         marginBottom: theme.spacing(2)
-    }
+    },
+    loader: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 }));
 
 const Caterogy = ({getCategoriesById, post, categories, match}) => {
     const classes = useStyles();
+
+    /*
+    * Use Effect hook
+    * Callin API categories route
+    * to recive a single categorie
+    * Recall hook on category id update
+    */
     useEffect(() => {
         getCategoriesById(match.params.id);
     },[match.params.id, getCategoriesById]);
 
+
+
+    
 
     return (
         <div className={classes.layout}>
