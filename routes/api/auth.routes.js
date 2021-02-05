@@ -25,7 +25,7 @@
         const candidate = await User.findOne({email});
 
         if (candidate){
-           return res.status(400).json({errors: [{message: 'User with this email already exists'}] });
+           return res.status(400).json({errors: ['User with this email already exists'] });
         }
 
         //Get user gravatar
@@ -85,13 +85,13 @@
         const user = await User.findOne({email});
 
         if(!user){
-            return res.status(400).json({errors: [{message: 'Wrong credentials. Try again'}]});
+            return res.status(400).json({errors: ['Wrong credentials. Try again']});
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(400).json({errors: [{message: 'Password do not match. Try again'}]});
+            return res.status(400).json({errors: ['Password do not match. Try again']});
         }
 
         const payload = {
