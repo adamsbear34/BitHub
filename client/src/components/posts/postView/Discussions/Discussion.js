@@ -43,7 +43,6 @@ const Discussion = ({comments, auth, deleteComment, postId}) => {
        
             <List className={classes.root}>
             {comments.map(comment => {
-                console.log("Comment", comment);
                 return (
                 <React.Fragment key={comment._id}>
                     <ListItem key={comment._id} alignItems="flex-start">

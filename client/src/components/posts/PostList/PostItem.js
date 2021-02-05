@@ -78,23 +78,7 @@ const PostItem = ({post: {_id, title, excerpt, photo, categories, postedBy, slug
                     </Avatar>
                     }
 
-                    action={
-                        auth.isAuthenticated && (
-                          !auth.loading && auth.user._id === postedBy._id  && (
-                              <IconButton 
-                                  aria-label="edit"
-                                  component={Link}
-                                  to={`/post/edit/${_id}`}
-                                  onClick={() => {
-                                    console.log(title)
-                                    console.log(_id)
-                                  }}
-                              >
-                                <EditIcon/>
-                              </IconButton>
-                          )   
-                        )              
-                    }
+                    
                     
                     title={
                       <Typography variant={"h5"} className={classes.title}>

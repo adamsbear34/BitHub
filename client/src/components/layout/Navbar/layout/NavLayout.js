@@ -98,6 +98,11 @@ const useStyles = makeStyles((theme) => ({
       margin: 4,
       backgroundColor: theme.palette.secondary.light
     },
+    empty_div: {
+      display: 'flex',
+      height: "38px",
+      width: "98px"
+    }
   }));
 
 
@@ -202,10 +207,13 @@ const NavLayout = ({ auth: { isAuthenticated, loading }, history }) => {
                     <div className={classes.logoHorizontallyCenter}>
                         <img src={logo_red} className={isSearching ? classes.logo_small : classes.logo } alt={"BitHub"} />
                     </div>
-                    
-                    
-                  
-                   { !loading && (<Fragment>{ isAuthenticated  ? <AuthLinks /> : <GuestLinks />}</Fragment>)}
+             
+                   { !loading && (<Fragment>{ isAuthenticated  ? <Fragment>
+                      <div className={classes.empty_div}>
+
+                      </div>
+                      <AuthLinks /> 
+                      </Fragment> : <GuestLinks />}</Fragment>)}
                 </Fragment>
              
 

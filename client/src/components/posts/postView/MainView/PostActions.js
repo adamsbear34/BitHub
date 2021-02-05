@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PostActions = ({ updateVote, post}) => {
+const PostActions = ({ updateVote, post, auth}) => {
     const classes = useStyles();
 
     const {_id, voteCount}= post;
@@ -88,6 +88,7 @@ const PostActions = ({ updateVote, post}) => {
                 <ButtonGroup  aria-label="outlined button group">
                         <Button
                             name="up"
+                            disabled={!auth.isAuthenticated}
                             variant="outlined"
                             onClick={ e => {
                                 vote("up", _id)
@@ -102,6 +103,7 @@ const PostActions = ({ updateVote, post}) => {
                         >{voteCount}</Button>
                         <Button
                             name="down"
+                            disabled={!auth.isAuthenticated}
                             variant="outlined"
                             onClick={ e => {
                                 vote("down", _id)
@@ -120,6 +122,11 @@ const PostActions = ({ updateVote, post}) => {
 PostActions.propTypes = {
     updateVote: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
 }
 
-export default connect(null, {updateVote})(PostActions)
+const mapStateToProps = (state) => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, {updateVote})(PostActions)

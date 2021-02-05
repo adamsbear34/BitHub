@@ -317,24 +317,21 @@ router.post('/comment/:id', [auth, [
         try {
 
             const post = await Post.findById(req.params.id);
-
+            
+            if(!post){
+                return res.status(404).json({ msg: "post does not exist" });
+              }
             //Pull out a comment 
-
-            const comment = post.coments.find(comment => comment.id === req.params.comment_id);
-
-            if(!comment){
-                return res.status(404).json({ msg: 'Comment does not exist'});
+            const comment = post.coments.find(comment=> comment.id.toString() === req.params.comment_id);
+            
+            if(!comment) {
+                return res.status(404).json({ msg: "comment does not exist" });
             }
 
-            if(comment.user.toString() !== req.user.id){
-                return res.status(401).json({ msg: 'User not authorized'});
-            }
+            const comntIndex = post.coments.map(comnt=> comnt.id.toString()).indexOf(req.params.comment_id);
 
 
-            const removeIndex = post.coments.map(comment => comment.user.toString()).indexOf(req.user.id);
-
-            post.coments.splice(removeIndex, 1);
-
+            post.coments.splice(comntIndex, 1);
             await post.save();
             res.json(post.coments);
 
