@@ -38,6 +38,8 @@ const App = () => {
     useEffect(() => {
         store.dispatch(loadUser());
     }, [loadUser]);
+
+    
     return (
     <ThemeProvider theme={theme}>
         <CssBaseline />

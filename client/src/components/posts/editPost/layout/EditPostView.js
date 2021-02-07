@@ -36,17 +36,19 @@ const EditPostView = ({post, categories, sentFormData}) => {
     const classes = useStyles();
 
     var postCategories = [];
+    var postImage = null;
     post.categories.map(c => {
         postCategories.push(c._id);
     });
     //Post title 
     const [updatedTitle, setTitle] = useState(post.title);
-
+    const [image, setImage] = useState();
 
     var formData = {
         title: updatedTitle,
         body: post.body,
-        categories: postCategories
+        categories: postCategories,
+        image: image
     };
 
     /**
@@ -66,6 +68,8 @@ const EditPostView = ({post, categories, sentFormData}) => {
         setTitle(e.target.value);
     };
 
+
+    
     /**
      * 
      * @param {*} data 
@@ -74,7 +78,7 @@ const EditPostView = ({post, categories, sentFormData}) => {
      */
     const hadleUpdatedData = (data) => {
         if (data.image){
-            formData.image = data.image;
+            setImage(data.image);
         }
         if (data.body && data.body !== "") {
             formData.body = data.body;
@@ -82,7 +86,12 @@ const EditPostView = ({post, categories, sentFormData}) => {
         if (data.categories && data.categories.length > 0){
             formData.categories = data.categories;
         }
-        sentFormData(formData)
+       
+        if (postImage !== null){
+            formData.image = postImage;
+        }
+    
+        sentFormData(formData);
     };
     return (
         <Fragment>

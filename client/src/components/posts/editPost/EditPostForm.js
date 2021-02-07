@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading, status, uploading}, categories: {categories}, auth, match}) => {
     const classes = useStyles();
     var updatedFormData = null;
+    
     useEffect(() => {
         getPost(match.params.id);
         getCategories();
@@ -71,7 +72,9 @@ const EditPostForm = ({updatePost, getPost, getCategories, post: { post, loading
             return;
         }
         const formData = new FormData();
-        formData.append('image', updatedFormData.image);
+        if (typeof updatedFormData.image !== 'undefined'){
+            formData.append('image', updatedFormData.image);
+        }
         formData.append('body', updatedFormData.body);
         formData.append('title', updatedFormData.title);
         formData.append('categories', updatedFormData.categories);
