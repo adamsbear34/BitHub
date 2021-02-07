@@ -12,7 +12,6 @@ import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditPorfile from './components/profile-forms/EditPorfile';
-import Profiles from './components/profiles/Profiles'
 import Profile from './components/userPorfile/Profile';
 import PostView from './components/posts/postView/MainView/PostView';
 import Category from './components/categories/Caterogy';
@@ -52,7 +51,6 @@ const App = () => {
                     <Route exact path="/home" component={Landing} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
-                    <Route exact path="/profiles" component={Profiles} />
                     <Route exact path="/profile/:id" component={Profile} />
                     <Route exact path="/posts/:id" component={PostView} />
                     <Route exact path="/posts" component={Posts} />

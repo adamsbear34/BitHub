@@ -38,7 +38,7 @@ const Dashboard = ({ getCurrentProfile, auth, profile: {profile, loading} }) => 
     
     return(
         <Fragment>
-        {loading || profile === null ?(
+        {loading && profile === null ?(
             <div className={classes.loader}>
                 <CircularProgress />
             </div>

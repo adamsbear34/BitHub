@@ -64,7 +64,6 @@ const AuthLinks = ({ logout }) => {
                 <MenuItem onClick={handleClose} component={Link} to={'/'}>Home</MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to={'/dashboard'}>Dashboard</MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to={'/create-post'}>Add Post</MenuItem>
-                <MenuItem onClick={handleClose} component={Link} to={'/profiles'}>Profiles</MenuItem>
                 <MenuItem onClick={ logout }>Logout</MenuItem>
               </Menu>
         </Fragment>
