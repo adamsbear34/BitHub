@@ -12,7 +12,7 @@ router.get('/',  async(req, res)=>{
     try{
         if (req.query.search){
             const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-            const posts = await Post.find({title: regex});
+            const posts = await Post.find({title: regex}).populate('postedBy', ['_id', 'username', 'voteCount', 'avatar']);
 
             if(!posts){
                 return res.status(404).json({msg: 'Nothing was found'});

@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PostItem = ({post: {_id, title, excerpt, photo, categories, postedBy, slug }, auth}) => {
     const classes = useStyles();
-    
+   
     return (
             <Card className={classes.root} elevation={0}>
                 <CardHeader
